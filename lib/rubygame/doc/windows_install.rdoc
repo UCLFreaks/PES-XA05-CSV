@@ -1,0 +1,51 @@
+Note: You can view the latest version of this guide online at the
+Rubygame wiki: http://rubygame.org/wiki/Windows_Installation_Guide
+
+== Gather Dependencies
+
+* {Ruby}[http://www.ruby-lang.org/en/downloads/], the language itself.
+  The easiest option here is the one-click installer. This will
+  install Ruby and a number of useful libraries without any hassle.
+
+* {SDL}[http://www.libsdl.org/download-1.2.php].
+  Download the Win32 binary package, e.g. "SDL-1.2.14-win32.zip".
+
+The rest are optional dependencies, but highly recommended. If you
+don't have them, you won't be able to use certain features of
+Rubygame.
+
+* {SDL_image}[http://www.libsdl.org/projects/SDL_image/].
+  Grab the Win32 binary package, e.g. "SDL_image-1.2.8-win32.zip".
+
+* {SDL_mixer}[http://www.libsdl.org/projects/SDL_mixer/].
+  Just like before, grab the Win32 binary package, e.g.
+  "SDL_mixer-1.2.9-win32.zip".
+
+* {SDL_ttf}[http://www.libsdl.org/projects/SDL_ttf/].
+  Again, get the Win32 binary package, e.g. "SDL_ttf-2.0.9-win32.zip".
+
+* {SDL_gfx}[http://www.ferzkopp.net/joomla/content/view/19/14/]
+  ({compiled version}[http://download.rubygame.org/files/extras/]).
+  Many thanks to a generous Rubygame user (bmatthew1) for providing a
+  compiled Windows DLL for SDL_gfx!
+
+Once you have downloaded everything, unzip them and copy the *.dll
+files into the <code>C:\windows\system32\</code> directory. This will
+allow the libraries to be detected and loaded by Rubygame.
+
+== Install Rubygame
+
+The simplest way to install Rubygame is: <code>gem install rubygame</code>
+
+Or you can {download the source from
+Github}[http://github.com/jacius/rubygame/] and follow the
+installation instructions in README.
+
+== Conclusion
+
+If all goes well, you have successfully installed Rubygame. Try to
+execute <code>require 'rubygame'</code> in an irb session and run the
+provided samples to ensure that everything is acceptable.
+
+If you have any trouble installing Rubygame, please post in the
+{forums}[http://rubygame.org/forums/].

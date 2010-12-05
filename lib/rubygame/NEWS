@@ -1,0 +1,666 @@
+= NEWS
+
+== Rubygame 2.6.4
+
+Release focus: Bug fix.
+
+=== Fixes
+
+- Fixed: Rubygame's "require_path" setting in the gem spec was
+  interfering with ruby-opengl (and potentially others). [#43]
+
+  If you have problems loading ruby-opengl when Rubygame 2.6.* is
+  installed via RubyGems, you should uninstall all versions of the
+  Rubygame gem, then reinstall version 2.6.4 (or later).
+
+
+
+
+== Rubygame 2.6.3
+
+Release focus: Bug fixes.
+
+=== Fixes
+
+- Fixed: MouseMoved events always reported that all buttons were
+  being pressed, even when they were not. [#38]
+
+- Fixed: MousePressed and MouseReleased events would raise an error
+  for mouse buttons larger than 5. [#40]
+
+- Fixed: KeyPressed and KeyReleased events always reported that all
+  modifier keys were being pressed, even when they were not. [#41]
+
+- Fixed: Rubygame would generate spurious WindowUnminimized,
+  InputFocusGained, and MouseFocusGained events (or the opposite)
+  whenever any one of those events actually occurred.
+
+- Fixed: Surface#convert would raise NameError if no Screen was open,
+  due to a typo. [#42]
+
+=== Other Changes
+
+- Rubygame will now skip auto-initialization if the RUBYGAME_NOINIT
+  environment variable (`ENV["RUBYGAME_NOINIT"]`) is set to "1",
+  "true", or "yes" (case insensitive). You must set the environment
+  variable *before* doing `require "rubygame"`. This is intended
+  for special cases where auto-initialization is not wanted.
+
+
+
+
+== Rubygame 2.6.2
+
+Release focus: Bug fixes.
+
+=== Fixes
+
+- Fixed: Rubygame::Screen.set_mode and Rubygame::Screen.instance were
+  accidently lost during the FFI port. (Note: those methods are
+  deprecated, but kept for backwards compatibility. New code should
+  use Rubygame::Screen.new or Rubygame::Screen.open instead.)
+
+
+
+
+== Rubygame 2.6.1
+
+Release focus: Bug fixes.
+
+=== Fixes
+
+- Fixed: Rubygame::Mixer.open_audio was using a different default
+  audio format than it did in 2.5.3, which caused an error on Mac.
+  (Note: The Rubygame::Mixer.open_audio is deprecated, but kept for
+  backwards compatibility. Use Rubygame.open_audio instead.)
+
+- Fixed: Rubygame no longer tries to load audio features if SDL_mixer
+  is not available. Trying to load them would cause an error, and
+  didn't match the old behavior.
+
+
+
+
+== Rubygame 2.6.0
+
+Release focus: Ported to FFI.
+
+=== FFI
+
+Rubygame is now pure Ruby, with no compiled C code. Instead, it uses
+Ruby-FFI (or compatible FFI implementations) to directly access SDL
+and related libraries. That means:
+
+- It is much easier to install. You can install it directly from
+  RubyGems (`gem install rubygame`) on any operating system, and you
+  don't need a C compiler or SDL headers.
+
+- It is now possible to use Rubygame on JRuby, and possibly on
+  Rubinius.
+
+- Rubygame will be slightly slower than before. But, the hard work is
+  still being done by SDL, so the speed decrease is only minor. The
+  increased portability and ease of future development greatly
+  outweighs the small speed loss.
+
+Despite the major architectural change, Rubygame 2.6 API is meant to
+be backwards compatible with Rubygame 2.5 and earlier. If you find an
+API incompatibility, you should report it as a bug.
+
+However, there are a few minor incompatibilities that are already known,
+and most likely cannot or will not be fixed:
+
+- Surface#flip now needs SDL_gfx to run. Before, it needed only plain
+  SDL, but the code for it was too slow when reimplemented in Ruby.
+
+- Rubygame::VERSIONS[:sdl_gfx] now reports [0,0,0] when SDL_gfx is
+  available, instead of its real version number. SDL_gfx does not
+  currently provide any way to detect its version number at run time.
+  (VERSIONS still reports nil when SDL_gfx is not available, the same
+  as in 2.5 and earlier.)
+
+=== Fixes
+
+- Fixed: Surface#set_at() now correctly sets the pixel's opacity for
+  Surfaces with an alpha channel. If no opacity is given for the new
+  color (i.e. only RGB), the pixel will be fully opaque.
+
+  - Note: Due to a long-standing bug, Surface.new cannot create a
+    Surface with an alpha channel. Use Surface#to_display_alpha to
+    create an alpha-channeled copy of the Surface, or load an image
+    file that has an alpha channel already.
+
+- Fixed: Music.load now automatically opens audio if needed. MP3s (and
+  perhaps other file types) would fail to load in some circumstances
+  if audio was not open.
+
+=== Other Changes
+
+- Rubygame now automatically initializes itself when loaded and cleans
+  itself up at exit. So, you no longer need to call Rubygame.init or
+  Rubygame.quit in your code (but it won't hurt if you do).
+
+- Added: New sample application, a basic image viewer.
+  See samples/image_viewer.rb.
+
+- Added: Documentation listing every keyboard symbol used by Rubygame.
+  See doc/keyboard_symbols.rdoc.
+
+- Added: Guide to setting custom load parts for SDL libraries.
+  See doc/custom_sdl_load_paths.rdoc.
+
+- Surface#alpha= is now a true alias for Surface#set_alpha. It was a
+  separate method before. It can still be used in the same way as
+  before.
+
+- Surface#colorkey= is now a true alias for Surface#set_colorkey. It
+  was a separate method before. It can still be used in the same way
+  as before.
+
+
+
+
+== Rubygame 2.5.3
+
+Release focus: Bug fixes.
+
+=== Fixes
+
+- Updated gemspec to list (install-time) dependency on Rake. [#24]
+
+- Fixed: MouseMoved and JoyBallMoved were wrongly using unsigned ints
+  for relative x and y positions. [#26]
+
+- Fixed: Clock#framerate returned Infinity under some conditions.
+
+- Fixed: Panda demo used the wrong order of steps for redrawing sprites.
+
+
+
+
+== Rubygame 2.5.2
+
+Release focus: Bug fixes.
+
+=== Fixes
+
+- Fixed: HasEventHandler#handle (and other methods) dealt with
+  NoMethodError exceptions in a stupid way.
+
+
+
+
+== Rubygame 2.5.1
+
+Release focus: Bug fixes.
+
+=== Fixes
+
+- Fixed: Clock.delay would delay forever if the delay time and
+  granularity were very small.
+
+- Fixed: Clock.delay would always be "nice" to other Ruby threads
+  during the final part of the delay, even if nice = false.
+
+
+
+
+== Rubygame 2.5.0
+
+Release focus: Clock improvements.
+
+=== Features
+
+- New and improved algorithm for calculating framerate.
+
+- Better Clock compatibility with multithreaded applications:
+
+  - Clock.delay and Clock.wait now accept a new argument: +nice+.
+    If nice is +true+, these methods try to allow other ruby threads
+    to run during the delay. The default behavior is to block other
+    threads, as previous versions of Rubygame do.
+
+  - Added: Clock @nice.
+    This instance variable controls the +nice+ value used while
+    delaying in #tick (if framerate limiting is active).
+
+- Better control over the balance between CPU usage and accuracy
+  when using Clock's framerate limiting:
+
+  - Added: Clock @granularity.
+    This instance variable controls the granularity value used while
+    delaying in #tick (if framerate limiting is active). Smaller
+    values lower CPU usage, but framerate limiting will be less
+    accurate if the granularity is lower than the system's actual
+    clock granularity. Use Clock#calibrate to find the best value for
+    the current system.
+
+  - Added: Clock#calibrate.
+    Call this after you create a Clock instance calibrate the Clock's
+    granularity to match the system's actual clock granularity. This
+    reduces wasteful CPU usage when using framerate limiting.
+
+- New ClockTicked event for use with EventHandlers:
+
+  - Added: ClockTicked event class.
+    If you call Clock#enable_tick_events, Clock#tick will return an
+    instance of ClockTicked instead of the raw delay time in milliseconds.
+
+  - Added: TickTrigger event trigger class.
+    Matches ClockTicked events.
+
+  - HasEventHandler#make_magic_hooks accepts the symbol :tick to create a
+    TickTrigger.
+
+- Added: Clock#frametime.
+  Returns the actual milliseconds per frame recorded by the Clock.
+
+- New in-depth Clock tutorial, "Managing Framerate".
+  See doc/managing_framerate.rdoc[link:files/doc/managing_framerate_rdoc.html].
+  An accompanying code example has also been added, samples/framerate.rb.
+
+- A few Screen additions:
+
+  - Added: Screen.get_resolution. Returns the user's desktop resolution.
+    Due to a limitation of SDL, this can ONLY be used when the Rubygame
+    window is closed (i.e. before you have called Screen.new, or after
+    you have called Screen.close).
+
+  - Added: Screen.close. Closes the Rubygame window, if it's open.
+
+  - Added: Screen.open?. True if the Rubygame window is open.
+
+  - Added: Screen.open (alias of Screen.new).
+
+- Added: HasEventHandler#make_magic_hooks_for.
+  It's like make_magic_hooks, but the hook's owner will be the
+  specified object, instead of the object with the handler.
+
+=== Other Stuff
+
+- Various Clock fixes and improvements:
+
+  - Clock#tick when called for the first time, no longer considers the
+    creation time of the Clock instance to be "the previous tick",
+    when checking how much time has passed.
+
+  - Clock#tick won't do any extra delay if the frame has already taken
+    longer than the target.
+
+  - Clock.delay and Clock.wait handle negative numbers more gracefully.
+    Instead of hanging for a long time, they act as if the values were 0.
+
+- Deprecation: Screen.set_mode and Screen.instance (both aliases of
+  Screen.new) are deprecated and will be removed in Rubygame 3.0.
+  Use Screen.new or Screen.open instead.
+
+- Deprecation: Ftor is deprecated and will be removed in Rubygame 3.0.
+  A mostly-compatible vector class will be provided at or before that time.
+
+- Deprecation: MediaBag is deprecated and will be removed in Rubygame 3.0.
+  Use the NamedResource functionality of Music, Sound, and Surface instead.
+
+
+
+
+== Rubygame 2.4.1
+
+Release focus: Bug fixes; Ruby 1.9 compatibility.
+
+=== Fixes
+
+- Fixed: Module scope problems with EventHandler and triggers.
+  They were trying to find the Events module, which only worked if
+  you had done 'include Rubygame' somewhere.
+
+- Fixed: Compiler warning in unmake_symbol().
+
+=== Other Stuff
+
+- Rubygame is compatible with Ruby 1.9.
+
+- Build system is compatible with Ruby 1.9.
+
+- Minor cleanup to build system internals.
+
+
+
+
+== Rubygame 2.4.0
+
+Release focus: Events.
+
+=== Features
+
+- New Events module, with a suite of new and revised event classes.
+  The new classes offer full functionality as the older classes.
+
+  - Use Rubygame::EventQueue#enable_new_style_events to enable the new
+    event classes. This will become the default in Rubygame 3.0.
+
+  - Uses symbols instead of integer constants for keyboard keys and
+    mouse buttons (e.g. :a, :space, :mouse_left, :mouse_right).
+
+  - Better unicode / international keyboard text input support.
+    (See Rubygame::Events::KeyPressed#string)
+
+  - More natural and memorable class naming scheme.
+
+- New hook-based event handling system.
+  (NOTE: Requires use of the new event classes.)
+
+  - Rubygame::EventHandler class.
+    EventHandler holds many EventHook instances. It handles each event
+    by passing it to matching hooks.
+
+  - Rubygame::EventHandler::HasEventHandler mixin module.
+    Include this in your custom classes to add easy event handling
+    and event hook creation abilities.
+
+  - Rubygame::EventHook class.
+    
+  - Rubygame::EventActions module.
+    Has several pre-made event action classes to use with EventHook.
+
+  - Rubygame::EventTriggers module.
+    Has several pre-made event trigger classes to use with EventHook.
+
+- Added Rubygame.enable_key_repeat and Rubygame.disable_key_repeat.
+  Thanks to atiaxi for this new feature!
+
+=== Fixes
+
+- Fixed: EventQueue#peek_each didn't yield any events.
+
+- Fixed: Segfault in extract_rgba_u8_as_u8() on x86_64 systems.
+  Thanks to ElCuGo for this fix!
+
+- Fixed: Several "cast from pointer" warnings on x86_64 systems.
+
+- Fixed: Build system didn't correctly compile with debug symbols
+  when using "debug" option.
+
+- Fixed: Surface#get_at didn't work correctly for 8-bit Surfaces.
+
+- Fixed: Ftor.new_from_to would always complain about "wrong number
+  of arguments". Thanks to atiaxi for this fix!
+
+=== Other Stuff
+
+- The panda demo (samples/demo_rubygame.rb) has been renovated to
+  demonstrate how to use the new features, and to be a better example.
+
+- Old event classes are deprecated and will be removed in 3.0.
+  - ActiveEvent      (use Events::InputFocusGained,
+                          Events::InputFocusLost,
+                          Events::MouseFocusGained,
+                          Events::MouseFocusLost,
+                          Events::WindowMinimized, and
+                          Events::WindowUnminimized)
+  - ExposeEvent      (use Events::WindowExposed)
+  - JoyAxisEvent     (use Events::JoystickAxisMoved)
+  - JoyBallEvent     (use Events::JoystickBallMoved)
+  - JoyDownEvent     (use Events::JoystickButtonPressed)
+  - JoyHatEvent      (use Events::JoystickHatMoved)
+  - JoyUpEvent       (use Events::JoystickButtonReleased)
+  - KeyDownEvent     (use Events::KeyPressed)
+  - KeyUpEvent       (use Events::KeyReleased)
+  - MouseDownEvent   (use Events::MousePressed)
+  - MouseMotionEvent (use Events::MouseMoved)
+  - MouseUpEvent     (use Events::MouseReleased)
+  - QuitEvent        (use Events::QuitRequested)
+  - ResizeEvent      (use Events::WindowResized)
+
+
+
+
+== Rubygame 2.3.0
+
+Release focus: Media resources.
+
+=== Features
+
+- Add: Rubygame::NamedResource mixin module
+  - Provides per-class resource repository and on-demand auto-loading
+    behavior.
+
+- Add: Rubygame::Music class.
+  - Intended as a full replacement for Rubygame::Mixer::Music.
+  - Includes NamedResources mixin.
+  - NOTE: Requires SDL_mixer support.
+
+- Add: Rubygame::Sound class.
+  - Intended as a full replacement for Rubygame::Mixer::Sample.
+  - Includes NamedResources mixin.
+  - NOTE: Requires SDL_mixer support.
+
+- Update: Rubygame::Surface class.
+  - Includes NamedResources mixin.
+  - Add: Surface.load_from_string (NOTE: Requires SDL_image support.)
+
+=== Fixes
+
+- ColorBase had been accidently placed in the top level namespace in
+  Rubygame 2.2.0. It is now correctly placed in the Rubygame::Color
+  module.
+
+=== Other Stuff
+
+- Deprecation (will be removed in Rubygame 3.0):
+  - Rubygame::Mixer module and methods are deprecated.
+  - Rubygame::Mixer::Music class is deprecated.
+    Use Rubygame::Music class instead.
+  - Rubygame::Mixer::Sample class is deprecated.
+    Use Rubygame::Sound class instead.
+  - Rubygame::Surface.load_image is deprecated.
+    Use Rubygame::Surface.load instead.
+
+- NOTE: Run ruby with -w flag or set $_v = true to enable run-time
+  deprecation warnings.
+
+
+
+
+== Rubygame 2.2.0
+
+Release focus: Colors.
+
+=== Features
+
+- Add: Rubygame::Color module
+  - ColorRGB, ColorHSV, and ColorHSL classes.
+  - X11 and CSS palettes of pre-defined colors.
+  - Surface methods can accept ColorRGB etc. for colors.
+  - Automatic lookup of color names when a string or symbol
+    is passed for a color to Surface methods.
+- Add: Surface#set_at().
+
+- Add: Screen#icon=().
+
+=== Bug Fixes
+
+- Fix: Surface#draw_arc was incorrectly documented as Surface#draw_pie
+
+=== Improvements
+
+- Rect#collide_rect? is now faster.
+- Sprites::Group#collide_group can take a block; arguments are deprecated.
+
+=== Other Stuff
+
+- Build system correctly recompiles if source has changed.
+- Build system option syntax has changed. See the README: Advanced Install.
+- Build system will correctly exit with an error status if it can't compile;
+  fixes Rubygems trying to install even when compile failed.
+
+=== Acknowledgements
+
+- Michael Swiger (mokkan) for Screen#icon=.
+- ippa for optimizing Rect#collide_rect?.
+
+
+
+
+== Rubygame 2.1.0
+
+=== Features
+
+- Add: Mixer::Music module.
+- Add: Mixer.driver_name method.
+- Add: Depth sorting for sprites.
+- Add: Sprite#undraw.
+- Add: TTF#size_utf8 and TTF#size_unicode.
+- Add: Rubygame.key_name.
+
+=== Bug Fixes
+
+- Fix: Bug with dirty rectangles in UpdateGroup.
+- Fix: Incorrect docs for joy-hat direction value.
+- Fix: Segfaults when Joysticks are garbage-collected after Rubygame has quit.
+- Fix: Segfaults when using Surface#convert, #to_display, or #to_display_alpha
+  when no video mode has been set.
+- Fix: Surface#get_at returning [0,0,0,0] when it shouldn't.
+- Fix: Sprites::Group#collide_group behaving incorrectly (again).
+- Fix: Build system doesn't correctly handle quoted spaces in --cflags/--lflags.
+  (NOTE: Use CFLAGS/LDFLAGS environment variables now, instead.)
+
+=== Known Issues
+
+- Build system won't detect changed source files and recompile as necessary;
+  you must "rake clobber build" after a change.
+
+=== Other Stuff
+
+- Added argument checks to several Rect methods.
+- Surfaces can be created with no Screen mode set.
+- Mixer.open_audio has default values.
+- TTF style getting/setting refactored under the hood.
+- Added demo_music.rb and a sample song.ogg to try out music.
+
+=== Acknowledgements
+
+- Johan Berntsson for adding Mixer::Music.
+- Daniel Neis Araujo for adding Sprite#undraw.
+- Roger Ostrander (denor) for and bug fixes and adding Rubygame.key_name.
+- Bjorn De Meyer (beoran) for numerous patches and improvements.
+
+
+ 
+
+== Rubygame 2.0.1
+
+=== Bug Fixes
+
+- Fix: Segfaults in several C methods when passed an unexpected argument type.
+- Fix: Segfaults in Screen#update and Screen#update_rects when the Rect(s)
+  extended out of the Screen bounds.
+- Fix: Ftor#magnitude= behaving incorrectly.
+- Fix: Rect#clip! behaving incorrectly.
+- Fix: Sprites::Group#collide_group behaving incorrectly.
+- Fix: Surface#savebmp wanting too many arguments.
+
+=== Other Stuff
+
+- Argument handling for C methods is now more robust under the hood.
+- C methods which expect Array arguments will now also work with objects
+  that can be converted to an Array (with #to_ary), such as Ftor.
+
+
+
+
+== Rubygame 2.0.0:
+
+*NOTICE*: version 2.0.0 is not totally backward-compatible with 1.1.0.
+You may have to update existing applications to the new syntax.
+(Hence the major version number going up.)
+
+=== API Changes
+
+==== Basic audio playback with SDL_mixer
+
+- Add: Rubygame::Mixer module (basic SDL_mixer audio playback).
+- Add: Rubygame::Mixer::Sample class (load audio samples).
+
+==== Event management system revamped
+
+- Add: Rubygame.fetch_sdl_events()
+- Add: Rubygame::EventQueue class.
+- Add: Rubygame::MailQueue mixin.
+- Retire: Rubygame::Queue class.
+
+==== Surface swallows Draw, Transform, and Image methods
+
+- Updated: Rubygame::Surface class
+  - Add: Surface.load_image() (migrated from Image).
+  - Add: ##savebmp (migrated from Image).
+  - Add: ##draw_* (migrated from Draw).
+  - Add: ##rotozoom, ##zoom (migrated from Transform).
+  - Add: ##zoom_to method.
+
+- Retire: Draw module (methods merged into Surface).
+- Retire: Transform module (methods merged into Surface).
+- Retire: Image module (methods merged into Surface).
+
+==== Clock class improved
+
+- Updated: Rubygame::Clock class
+  - Clock is now directly under Rubygame (not Rubygame::Time).
+  - Clock.new() takes no arguments, but yields self if a block is given.
+  - framerate limiting with ##tick is now much more accurate.
+  - Add: Clock.runtime(), Clock.wait(), Clock.delay() (migrated from Time)
+  - Rename: ##fps to ##framerate.
+  - Rename: ##desired_fps to ##target_framerate.
+  - Rename: ##desired_mspf to ##target_frametime.
+  - Rename: ##time to ##lifetime.
+
+- Retire: Time module (methods merged into Clock).
+
+==== Experimental classes/modules
+
+- Add: Rubygame::MediaBag class.
+- Add: Rubygame::Ftor class.
+- Add: Rubygame::Hotspot mixin.
+- Change: Rubygame::SFont class must be explicitly imported
+  (require 'rubygame/sfont').
+
+==== New system for version and capability detection
+
+- Rubygame::VERSIONS: a hash table with the version numbers of rubygame, 
+  SDL, and any SDL_* libraries that were compiled in.
+- Methods which are not supported will no be defined in the namespace; 
+  formerly, they would be defined but nonfunctional (issued a warning and
+  returned nil).
+
+==== Miscellaneous other changes and additions
+
+- Add: Rubygame.quit (cleanly exit SDL; resets resolution after fullscreen).
+
+- Updated: Rubygame::Surface class
+  - Argument list for Surface.new() has changed.
+  - Add: ##clip and ##clip=.
+  - Add: ##convert, ##to_display, and ##to_display_alpha.
+
+- Updated: Rubygame::Screen class
+  - Rename: Screen.set_mode() to Screen.new().
+  - Add: Screen.set_mode() and Screen.instance() (aliases for Screen.new()).
+  - Add: ##title, ##title= (replaces ##caption and ##set_caption)
+
+- Updated: Rubygame::TTF class
+  - Add: ##render_utf8 and ##render_unicode methods.
+  - Add: ##size_text method.
+
+=== Bug Fixes
+
+- Fix several erroneous Rect methods.
+- Fix "bignum out of range of unsigned long (RangeError)" when using
+  Rubygame::FULLSCREEN.
+
+=== Other Stuff
+
+- New build/install system with Rake.
+- Split the monolithic rubygame extension into modules:
+  rubygame_core::  main SDL interface.
+  rubygame_gfx::   SDL_gfx interface.
+  rubygame_image:: SDL_image interface.
+  rubygame_mixer:: SDL_mixer interface.
+  rubygame_ttf::   SDL_ttf interface.

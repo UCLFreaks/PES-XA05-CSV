@@ -1,0 +1,8 @@
+= Using Surface Palettes in Rubygame
+
+This is a guide will explain the concept of Surface palettes, as well
+as the methods available to use them in Rubygame.
+
+== About Surface Palettes
+
+Surface palettes are a feature in SDL which 

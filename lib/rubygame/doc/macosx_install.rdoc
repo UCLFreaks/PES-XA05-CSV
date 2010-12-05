@@ -1,0 +1,84 @@
+Note: You can view the latest version of this guide online at the
+Rubygame wiki: http://rubygame.org/wiki/Mac_Installation_Guide
+
+== Installing Xcode
+
+Rubygame does not need to be compiled anymore (since version 2.6),
+but you will need to install the Xcode development tools in order
+to install the dependencies with Fink or Darwinports, as well as
+to compile rsdl.
+
+You can find Xcode on your Mac OS X installation disc. Or, you can
+download Xcode online. You must register for a (free) Mac developer
+account for this.
+
+* Mac OS X 10.5 (Leopard) and 10.6 (Snow Leopard):
+  {Xcode 3.1}[https://connect.apple.com/cgi-bin/WebObjects/MemberSite.woa/wa/getSoftware?bundleID=20414]
+
+* Mac OS X 10.3 (Panther) and 10.4 (Tiger):
+  {Xcode 2.5}[http://connect.apple.com/cgi-bin/WebObjects/MemberSite.woa/wa/getSoftware?bundleID=19907]
+
+== Installing dependencies...
+
+You have two options for installing the software libraries that
+Rubygame depends on: Fink or Darwinports. Which option you choose is
+just a matter of preference.
+
+=== ...with {Fink}[http://www.finkproject.org/]
+
+1. {Install Fink}[http://www.finkproject.org/download/index.php?phpLang=en]
+   and update to the latest version.
+2. Open a new terminal (can be found in /Applications/Utilities).
+3. Install SDL:
+
+     sudo apt-get install sdl
+
+4. (Optional, but *highly* recommended:) Install the SDL companion
+   libraries:
+
+     sudo apt-get install sdl-gfx13 sdl-image sdl-mixer sdl-ttf
+
+Thanks to Matt Crinklaw for these instructions.
+
+=== ...with {Darwinports}[http://darwinports.com/]
+
+1. {Install Darwinports}[http://darwinports.com/download/] (you must
+   register first).
+2. Open a new terminal (can be found in /Applications/Utilities).
+3. Install SDL:
+
+     sudo port install libsdl
+
+4. (Optional, but *highly* recommended:) Install the SDL companion
+   libraries:
+
+     sudo port install libsdl_gfx libsdl_image libsdl_mixer libsdl_ttf
+
+Thanks to Raffael Mancini (sepisultrum) for these instructions.
+
+== Installing rsdl
+
+In order to use Rubygame applications on Mac OS X, you must use a special wrapper for the Ruby interpreter, called rsdl.
+
+1. {Get rsdl}[http://github.com/knu/rsdl].
+2. From within the rsdl directory:
+
+     ruby ./configure.rb
+     make
+     sudo cp rsdl /usr/local/bin/
+
+== Installing Rubygame
+
+The simplest way to install Rubygame is: <code>gem install rubygame</code>
+
+Or you can {download the source
+from Github}[http://github.com/jacius/rubygame/] and follow the installation instructions in README.
+
+== Running an application
+
+If all went well, you can now run Rubygame applications like so: 
+
+    rsdl a_rubygame_app.rb
+
+If you have any trouble installing Rubygame, please post in the
+{forums}[http://rubygame.org/forums/].
