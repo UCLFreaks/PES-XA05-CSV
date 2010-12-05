@@ -3,9 +3,11 @@
 require "./rubygame/lib/rubygame.rb"
 require "./background.rb"
 require "./unit.rb"
+require "./battle_stepper.rb"
 
 class Visualization
-	def initialize
+	def initialize(battle)
+    @battle_stepper = BattleStepper.new(battle,5000)
 		Rubygame.init
     maximum_resolution = Rubygame::Screen.get_resolution
     @resolution = [maximum_resolution[0] - 60, 200]
@@ -26,20 +28,23 @@ class Visualization
  
 	def run
 		loop do
-			update
+      time_elapsed = @clock.tick.milliseconds()
+			update(time_elapsed)
 			draw
-			@clock.tick
+		
 		end
 	end
 
-	def update
-		@queue.each do |ev|
+	def update(time_elapsed)
+
+    @queue.each do |ev|
 			case ev
 				when Rubygame::QuitEvent
 					Rubygame.quit
 					exit
 			end
 		end
+    @battle_stepper.update(time_elapsed)
 	end
 
 	def draw
