@@ -62,12 +62,7 @@ def run
   end
 end
 
-def make_step
-  @army1.attack(@army1)
-  @army2.attack(@army1)
-  @day += 1
-  info
-end
+
 
 end
 
