@@ -2,13 +2,16 @@
 # and open the template in the editor.
 require "./rubygame/lib/rubygame.rb"
 require "./background.rb"
+require "./sprite_group.rb"
 require "./basic_sprite.rb"
+
 require "./unit.rb"
 
 require "./battle_stepper.rb"
 require "./battle_visualizer.rb"
 
 class Visualization
+  attr_reader :sky_height
 	def initialize(battle)
     @battle_stepper = BattleStepper.new(battle,5000)
 
@@ -16,7 +19,8 @@ class Visualization
     maximum_resolution = Rubygame::Screen.get_resolution
     @resolution = [maximum_resolution[0] - 60, 200]
     puts "This display can manage at least " + maximum_resolution.join("x")
-    @battle_visualizer = BattleVisualizer.new(battle,@resolution)
+    @sky_height = @resolution[1]/2
+    @battle_visualizer = BattleVisualizer.new(battle,@resolution,@sky_height)
     @screen = Rubygame::Screen.new [@resolution[0], @resolution[1]], 0, [Rubygame::HWSURFACE, Rubygame::DOUBLEBUF]
 		@screen.title = "PES XA05 VISUALIZATION!"
 
@@ -24,9 +28,8 @@ class Visualization
 		@clock = Rubygame::Clock.new
 		@clock.target_framerate = 30
     @clock.enable_tick_events
-
-    @background = Background.new(@resolution)
-    @unit = Unit.new(nil)
+    
+    @background = Background.new(@resolution,@sky_height)
 
 
 	end
@@ -51,13 +54,11 @@ class Visualization
 		end
     @battle_stepper.update(time_elapsed)
     @battle_visualizer.update(time_elapsed)
-    @unit.update(time_elapsed)
 	end
 
 	def draw
     @background.draw(@screen)
     @battle_visualizer.draw(@screen)
-		@unit.draw(@screen)
     @screen.flip
     
 	end

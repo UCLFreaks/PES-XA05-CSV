@@ -3,17 +3,30 @@
 require "./axis.rb"
 
 class BattleVisualizer
-  attr_reader :battle,:range,:world_size,:axis,:margin
-  def initialize(battle_program,world_size)
+  attr_reader :battle,:range,:world_size,:axis,:margin,:sky_height
+  def initialize(battle_program,world_size,sky_height)
     @battle = battle_program
     @range = get_range
     @world_size = world_size
+    @sky_height = sky_height
     @margin = world_size[0]/80
     @axis = Axis.new(self)
+    @unit_sprites = SpriteGroup.new
+    create_sprites_for_units(@battle.army1.units,:team1)
+    create_sprites_for_units(@battle.army2.units,:team2)
   end
 
+  def create_sprites_for_units(units,team)
+    sprites = @unit_sprites
+    units.each do |unit|
+      sprites << Unit.new(unit, team,self)
+    end
+    return sprites
+  end
+
+
   def sim_to_vis_x(sim_x)
-    return @margin + (sim_x * tick_step_size).round
+    return @margin + ((sim_x - @range[0]) * tick_step_size).round
   end
 
   def tick_step_size()
@@ -28,12 +41,12 @@ class BattleVisualizer
 
 
   def update(miliseconds_elasped)
-
+    @unit_sprites.update(miliseconds_elasped)
   end
 
   def draw(to_surface)
     @axis.draw(to_surface)
-    
+    @unit_sprites.draw(to_surface)
   end
 
   private

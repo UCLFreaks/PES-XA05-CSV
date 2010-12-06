@@ -9,7 +9,7 @@ class BattleProgram
     return @army2
   end
   def make_step
-    @army1.attack(@army1)
+    @army1.attack(@army2)
     @army2.attack(@army1)
     @day += 1
     info

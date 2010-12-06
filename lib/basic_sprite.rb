@@ -3,8 +3,11 @@
 
 class BasicSprite
   include Rubygame::Sprites::Sprite
+  attr_reader :depth
   
-  
+  def initialize
+    @groups = []
+  end
 
 
   def draw(to_surface)

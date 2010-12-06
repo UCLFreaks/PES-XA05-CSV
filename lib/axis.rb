@@ -18,8 +18,9 @@ class Axis < BasicSprite
     surface.draw_box_s([0+@visualizer.margin,5], [size[0]-@visualizer.margin,10], [0,0,0])
     puts "number of ticks: #{@visualizer.number_of_ticks}"
     (@visualizer.number_of_ticks() + 1).times do |sim_tick|
-      x = @visualizer.sim_to_vis_x(sim_tick)
-      puts "#{sim_tick} to #{x}"
+      sim_x = @visualizer.range[0] + sim_tick
+      x = @visualizer.sim_to_vis_x(sim_x)
+      puts "#{sim_x} to #{x}"
       surface.draw_box_s([x-1,0], [x+1,20], [255,0,0])
       
     end
