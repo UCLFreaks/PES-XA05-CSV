@@ -1,11 +1,12 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 require "./rubygame/lib/rubygame.rb"
+module Visualization
 require "./background.rb"
 require "./sprite_group.rb"
 require "./basic_sprite.rb"
 
-require "./unit.rb"
+
 
 require "./battle_stepper.rb"
 require "./battle_visualizer.rb"
@@ -13,7 +14,7 @@ require "./battle_visualizer.rb"
 class Visualization
   attr_reader :sky_height
 	def initialize(battle)
-    @battle_stepper = BattleStepper.new(battle,5000)
+    @battle_stepper = BattleStepper.new(battle,1000)
 
 		Rubygame.init
     maximum_resolution = Rubygame::Screen.get_resolution
@@ -62,4 +63,5 @@ class Visualization
     @screen.flip
     
 	end
+end
 end

@@ -1,6 +1,10 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 require "./axis.rb"
+require "./unit.rb"
+require "./soldier_sprite.rb"
+require "./sniper_sprite.rb"
+require "./tank_sprite.rb"
 
 class BattleVisualizer
   attr_reader :battle,:range,:world_size,:axis,:margin,:sky_height
@@ -19,7 +23,15 @@ class BattleVisualizer
   def create_sprites_for_units(units,team)
     sprites = @unit_sprites
     units.each do |unit|
-      sprites << Unit.new(unit, team,self)
+      case unit
+      when Soldier
+        sprites << SoldierSprite.new(unit, team, self)
+      when Sniper
+        sprites << SniperSprite.new(unit, team, self)
+      when Tank
+        sprites << TankSprite.new(unit, team, self)
+      end
+      
     end
     return sprites
   end
@@ -45,7 +57,7 @@ class BattleVisualizer
   end
 
   def draw(to_surface)
-    @axis.draw(to_surface)
+    #@axis.draw(to_surface)
     @unit_sprites.draw(to_surface)
   end
 

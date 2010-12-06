@@ -3,7 +3,7 @@
 
 
 class Unit < BasicSprite
-  DEPTH_LEVELS = 6
+  DEPTH_LEVELS = 12
   UNIT_Y = 46
   UNIT_X = 46
 
@@ -12,19 +12,27 @@ class Unit < BasicSprite
     @unit = unit
     @team = team
     @depth = rand(DEPTH_LEVELS)
-    @image = get_image(unit, team,:living)
-    @position = [@v.sim_to_vis_x(@unit.position)-UNIT_X/2,depth_to_y]
-    @image = @image.zoom_to(UNIT_X, UNIT_Y,true)
-    @image = @image.flip(true, false) if @unit.position > 0
+    @state = :living
+    @direction = :left if @unit.position > 0
+    @image = get_image(unit, team,@state)
+
+    @position = [@v.sim_to_vis_x(@unit.position)-unit_size[0]/2,depth_to_y]
+
     super()
   end
 
   def update(miliseconds_elapsed)
-    @position = [@v.sim_to_vis_x(@unit.position)-UNIT_X/2,@position[1]]
+    @position = [@v.sim_to_vis_x(@unit.position)-unit_size[0]/2,@position[1]]
+    new_state = @state
+    if(@state == :living and @unit.lives <= 0)
+         new_state = :dead
+         @image = get_image(@unit, @team, new_state)
+    end
+    @state = new_state
   end
   
   def depth_to_y
-    return @v.sky_height - UNIT_Y +  @depth * (@v.world_size[1]-@v.sky_height)/DEPTH_LEVELS 
+    return @v.sky_height - unit_size[1] +  @depth * (@v.world_size[1]-@v.sky_height)/DEPTH_LEVELS
   end
 
   def draw(to_surface)
@@ -42,12 +50,23 @@ class Unit < BasicSprite
     case state
     when :living
       state_suffix = ""
+    when :dead
+      state_suffix = "_d"
+    else
+      state_suffix = ""
     end
 
-    return Rubygame::Surface.load('./img/'+get_image_base_name+team_suffix+state_suffix+'.png')
-  end
 
-  def get_image_base_name
+
+    image = Rubygame::Surface.load('./img/'+get_image_base_name(state)+team_suffix+state_suffix+'.png')
+    image = image.flip(true, false) if @direction == :left
+    image = image.zoom_to(unit_size[0], unit_size[1],true)
+    return image
+  end
+  def unit_size()
+    return [UNIT_X,UNIT_Y]
+  end
+  def get_image_base_name(state)
     return "soldier"
   end
 

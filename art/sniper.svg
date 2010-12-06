@@ -15,7 +15,7 @@
    version="1.1"
    inkscape:version="0.48.0 r9654"
    sodipodi:docname="sniper.svg"
-   inkscape:export-filename="C:\Users\Kal\Documents\My Dropbox\projects\Ruby\PES-XA05-CSV\lib\img\sniper.png"
+   inkscape:export-filename="C:\Users\Kal\Documents\My Dropbox\projects\Ruby\PES-XA05-CSV\lib\img\sniper_b.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -27,9 +27,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.5"
+     inkscape:zoom="8.6875"
      inkscape:cx="32"
-     inkscape:cy="32.090909"
+     inkscape:cy="32"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:document-units="px"
@@ -38,7 +38,7 @@
      inkscape:guide-bbox="true"
      inkscape:snap-global="false"
      inkscape:window-width="1366"
-     inkscape:window-height="746"
+     inkscape:window-height="716"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1">
@@ -72,7 +72,7 @@
      inkscape:groupmode="layer">
     <path
        sodipodi:type="arc"
-       style="fill:#ff0000;fill-opacity:1"
+       style="fill:#0000ff;fill-opacity:1"
        id="path3004"
        sodipodi:cx="32"
        sodipodi:cy="11.454545"
@@ -80,17 +80,17 @@
        sodipodi:ry="7.818182"
        d="m 39.818182,11.454545 a 7.818182,7.818182 0 1 1 -15.636364,0 7.818182,7.818182 0 1 1 15.636364,0 z" />
     <path
-       style="fill:none;stroke:#ff0000;stroke-width:0.86570019px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;stroke:#0000ff;stroke-width:0.86570019px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 32,19.272727 0,18.122744"
        id="path3006"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:none;stroke:#ff0000;stroke-width:1.15356565000000000px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;stroke:#0000ff;stroke-width:1.15356565px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 42.642422,62.069579 32,37.540247 21.44196,61.87509"
        id="path3008"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:none;stroke:#ff0000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;stroke:#0000ff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 27.636364,17.090909 16.545455,20.363636 32,24.909091 l 14.545455,-8"
        id="path3010"
        inkscape:connector-curvature="0"
@@ -132,7 +132,7 @@
        id="path3001"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:#000000;fill-opacity:1;stroke:#ff0000;stroke-width:0.18181819"
+       style="fill:#000000;fill-opacity:1;stroke:#0000ff;stroke-width:0.18181818999999999"
        d="m 46.581818,14.846586 c -1.65,-0.06795 -3.265909,-0.134872 -3.590909,-0.148706 C 42.598048,14.681157 42.4,14.581321 42.4,14.4 c 0,-0.15 0.102273,-0.272796 0.227273,-0.27288 0.125,-8.4e-5 2.231818,-0.204561 4.681818,-0.454393 2.45,-0.249832 4.515909,-0.454308 4.590909,-0.454392 0.075,-8.4e-5 0.136364,0.408938 0.136364,0.908938 l 0,0.909091 -1.227273,-0.03311 c -0.675,-0.01821 -2.577273,-0.08871 -4.227273,-0.156665 z"
        id="path3003"
        inkscape:connector-curvature="0" />
