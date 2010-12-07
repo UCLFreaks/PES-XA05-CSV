@@ -3,8 +3,8 @@ require './simulation_extension.rb'
 require './visualization.rb'
 
 
-units1 = [Soldier.new(10),Soldier.new(12),Soldier.new(30),Tank.new(8)]
-units2 = [Soldier.new(-20),Soldier.new(-10),Soldier.new(-12),Sniper.new(-25),Tank.new(-17)]
+units1 = [Tank.new(15),Soldier.new(10),Soldier.new(12),Soldier.new(50),Tank.new(8)]
+units2 = [Soldier.new(-8),Soldier.new(-3),Soldier.new(-1),Sniper.new(-14),Tank.new(-9)]
 army1 = Army.new(units1, SimulationStrategy.new)
 army2 = Army.new(units2, SimulationStrategy.new)
 battle = BattleProgram.new(army1,army2)

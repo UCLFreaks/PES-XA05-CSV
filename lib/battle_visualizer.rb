@@ -18,6 +18,7 @@ class BattleVisualizer
     @unit_sprites = SpriteGroup.new
     create_sprites_for_units(@battle.army1.units,:team1)
     create_sprites_for_units(@battle.army2.units,:team2)
+    @unit_sprites.sort_sprites
   end
 
   def create_sprites_for_units(units,team)

@@ -14,4 +14,8 @@ class BasicSprite
     @image.blit(to_surface,@position)
   end
 
+  def speed
+    raise "Speed for #{self.class} not defined!"
+  end
+
 end
