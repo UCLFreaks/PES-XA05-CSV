@@ -7,7 +7,7 @@ class TankSprite < Unit
     return "tank"
   end
 
-  def unit_size
+  def sprite_size
     return [128,64]
   end
 end

@@ -16,13 +16,13 @@ class Unit < BasicSprite
     @direction = :left if @unit.position > 0
     @image = get_image(unit, team,@state)
 
-    @position = [@v.sim_to_vis_x(@unit.position)-unit_size[0]/2,depth_to_y]
+    @position = [@v.sim_to_vis_x(@unit.position),depth_to_y]
 
     super()
   end
 
   def update(miliseconds_elapsed)
-    @position = [@v.sim_to_vis_x(@unit.position)-unit_size[0]/2,@position[1]]
+    @position = [@v.sim_to_vis_x(@unit.position),@position[1]]
     new_state = @state
     if(@state == :living and @unit.lives <= 0)
          new_state = :dead
@@ -32,12 +32,12 @@ class Unit < BasicSprite
   end
   
   def depth_to_y
-    return @v.sky_height - unit_size[1] +  -@depth * (@v.world_size[1]-@v.sky_height)/DEPTH_LEVELS
+    return @v.sky_height - sprite_size[1] +  -@depth * (@v.world_size[1]-@v.sky_height)/DEPTH_LEVELS
   end
 
   def draw(to_surface)
 
-    @image.blit(to_surface,@position)
+    @image.blit(to_surface,[@position[0]-sprite_size[0]/2,@position[1]])
   end
 
   def get_image(unit,team,state)
@@ -60,10 +60,10 @@ class Unit < BasicSprite
 
     image = Rubygame::Surface.load('./img/'+get_image_base_name(state)+team_suffix+state_suffix+'.png')
     image = image.flip(true, false) if @direction == :left
-    image = image.zoom_to(unit_size[0], unit_size[1],true)
+    image = image.zoom_to(sprite_size[0], sprite_size[1],true)
     return image
   end
-  def unit_size()
+  def sprite_size()
     return [UNIT_X,UNIT_Y]
   end
   def get_image_base_name(state)

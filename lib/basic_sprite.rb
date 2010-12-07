@@ -15,7 +15,11 @@ class BasicSprite
   end
 
   def speed
-    raise "Speed for #{self.class} not defined!"
+    raise "Speed for #{self.class} is not defined!"
+  end
+
+  def sprite_size
+    return @image.size
   end
 
 end
