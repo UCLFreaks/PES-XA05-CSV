@@ -2,14 +2,14 @@
 # and open the template in the editor.
 require "./rubygame/lib/rubygame.rb"
 module Visualization
-require "./background.rb"
-require "./sprite_group.rb"
-require "./basic_sprite.rb"
+require "./visualization/background.rb"
+require "./visualization/sprites/sprite_group.rb"
+require "./visualization/sprites/basic_sprite.rb"
 
 
 
-require "./battle_stepper.rb"
-require "./battle_visualizer.rb"
+require "./visualization/battle_stepper.rb"
+require "./visualization/battle_visualizer.rb"
 
 class Visualization
   attr_reader :sky_height

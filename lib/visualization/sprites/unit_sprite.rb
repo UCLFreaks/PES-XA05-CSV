@@ -2,7 +2,7 @@
 # and open the template in the editor.
 
 
-class Unit < BasicSprite
+class UnitSprite < BasicSprite
   DEPTH_LEVELS = 12
   UNIT_Y = 46
   UNIT_X = 46

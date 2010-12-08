@@ -1,10 +1,10 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
-require "./axis.rb"
-require "./unit.rb"
-require "./soldier_sprite.rb"
-require "./sniper_sprite.rb"
-require "./tank_sprite.rb"
+require "./visualization/sprites/axis.rb"
+require "./visualization/sprites/unit_sprite.rb"
+require "./visualization/sprites/soldier_sprite.rb"
+require "./visualization/sprites/sniper_sprite.rb"
+require "./visualization/sprites/tank_sprite.rb"
 
 class BattleVisualizer
   attr_reader :battle,:range,:world_size,:axis,:margin,:sky_height

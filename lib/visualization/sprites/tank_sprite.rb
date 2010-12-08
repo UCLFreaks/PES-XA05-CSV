@@ -1,7 +1,7 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 
-class TankSprite < Unit
+class TankSprite < UnitSprite
 
   def get_image_base_name(state)
     return "tank"

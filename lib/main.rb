@@ -1,6 +1,6 @@
 require './simulation/simulation.rb'
-require './simulation_extension.rb'
-require './visualization.rb'
+require './visualization/simulation_extension.rb'
+require './visualization/visualization.rb'
 
 
 units1 = [Tank.new(15),Soldier.new(10),Soldier.new(12),Soldier.new(50),Tank.new(8)]

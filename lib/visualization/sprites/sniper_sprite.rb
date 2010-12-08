@@ -1,7 +1,7 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 
-class SniperSprite < Unit
+class SniperSprite < UnitSprite
   def get_image_base_name(state)
     return "soldier" if state == :dead
     return "sniper"
