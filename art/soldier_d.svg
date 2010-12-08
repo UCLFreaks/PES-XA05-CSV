@@ -15,7 +15,7 @@
    version="1.1"
    inkscape:version="0.48.0 r9654"
    sodipodi:docname="soldier_d.svg"
-   inkscape:export-filename="C:\Users\Kal\Documents\My Dropbox\projects\Ruby\PES-XA05-CSV\lib\img\soldier_b.png"
+   inkscape:export-filename="C:\Users\Kal\Documents\My Dropbox\projects\Ruby\PES-XA05-CSV\lib\img\soldier_r_d.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -29,8 +29,8 @@
      inkscape:pageshadow="2"
      inkscape:zoom="5.5"
      inkscape:cx="0.27272727"
-     inkscape:cy="32"
-     inkscape:current-layer="layer2"
+     inkscape:cy="32.090909"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:document-units="px"
      inkscape:grid-bbox="true"
@@ -1827,7 +1827,7 @@
      inkscape:groupmode="layer">
     <path
        sodipodi:type="arc"
-       style="fill:#0000ff;fill-opacity:1"
+       style="fill:#ff0000;fill-opacity:1"
        id="path3004"
        sodipodi:cx="32"
        sodipodi:cy="11.454545"
@@ -1836,18 +1836,18 @@
        d="m 39.818182,11.454545 a 7.818182,7.818182 0 1 1 -15.636364,0 7.818182,7.818182 0 1 1 15.636364,0 z"
        transform="matrix(-0.02554262,-0.99967373,0.99967373,-0.02554262,4.3205069,87.976312)" />
     <path
-       style="fill:none;stroke:#0000ff;stroke-width:0.86570019px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;stroke:#ff0000;stroke-width:0.86570019px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 19.133218,53.676295 37.250049,53.213393"
        id="path3006"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:none;stroke:#0000ff;stroke-width:1.15356565px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;stroke:#ff0000;stroke-width:1.15356565px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 61.644272,57.035111 -11.602721,-9.700678 -12.646773,5.875262 11.56306,4.669596 11.760796,3.990697"
        id="path3008"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
     <path
-       style="fill:none;stroke:#0000ff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;stroke:#ff0000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 44.009594,62.440159 28.083202,56.436896 24.767743,53.532328 m 0,0 0.105896,0.004"
        id="path3010"
        inkscape:connector-curvature="0"
@@ -1878,7 +1878,7 @@
          style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     </g>
     <path
-       style="fill:#ff0000;stroke:#0000ff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
+       style="fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 27.939166,49.17527 20.201101,39.564416"
        id="path3806"
        inkscape:connector-curvature="0" />

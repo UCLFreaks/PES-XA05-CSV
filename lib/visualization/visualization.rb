@@ -1,6 +1,6 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
-require "./rubygame/lib/rubygame.rb"
+require "./visualization/rubygame/lib/rubygame.rb"
 module Visualization
 require "./visualization/background.rb"
 require "./visualization/sprites/sprite_group.rb"
