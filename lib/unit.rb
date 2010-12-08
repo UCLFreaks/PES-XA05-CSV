@@ -8,6 +8,7 @@ class Unit < BasicSprite
   UNIT_X = 46
 
   def initialize(unit,team,vizualizer)
+    super()
     @v = vizualizer
     @unit = unit
     @team = team
@@ -15,10 +16,10 @@ class Unit < BasicSprite
     @state = :living
     @direction = :left if @unit.position > 0
     @image = get_image(unit, team,@state)
-
     @position = [@v.sim_to_vis_x(@unit.position),depth_to_y]
+    
 
-    super()
+    
   end
 
   def update(miliseconds_elapsed)
