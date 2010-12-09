@@ -27,7 +27,8 @@ class Visualization
 
 		@queue = Rubygame::EventQueue.new
 		@clock = Rubygame::Clock.new
-		@clock.target_framerate = 30
+		@clock.target_framerate = 50
+    @clock.calibrate
     @clock.enable_tick_events
     
     @background = Background.new(@resolution,@sky_height)

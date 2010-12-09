@@ -1,3 +1,8 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
+class Cloud < BasicSprite
 
+  def initialize
+    super()
+    @image = get_image("soldier_r_d.png")
+  end
+
+end

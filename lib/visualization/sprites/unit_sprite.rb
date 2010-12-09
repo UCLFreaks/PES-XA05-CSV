@@ -59,7 +59,7 @@ class UnitSprite < BasicSprite
 
 
 
-    image = Rubygame::Surface.load('./img/'+get_image_base_name(state)+team_suffix+state_suffix+'.png')
+    image = super(get_image_base_name(state)+team_suffix+state_suffix+'.png')
     image = image.flip(true, false) if @direction == :left
     image = image.zoom_to(sprite_size[0], sprite_size[1],true)
     return image

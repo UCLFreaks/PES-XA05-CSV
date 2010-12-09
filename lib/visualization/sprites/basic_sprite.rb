@@ -7,9 +7,8 @@ class BasicSprite
   
   def initialize
     @groups = []
-    @destiination = nil
-    @move_timer = 0
-    @move_after = 20
+    @velocity = [0.0,0.0]
+    @position = [0.0,0.0]
   end
 
 
@@ -17,37 +16,30 @@ class BasicSprite
     @image.blit(to_surface,@position)
   end
 
-  def speed
-    raise "Speed for #{self.class} is not defined!"
+  def velocity
+    return @velocity
+  end
+  def velocity=(vel)
+    @velocity = vel
   end
 
-  def set_position(pos)
+  def position=(pos)
     @position = pos
   end
 
-  def move_to(pos)
-    @destination = pos
-  end
-
-  def move(time_elapsed)
-    execute_moving if should_move? and time_to_move?(time_elapsed)
+  def move(dt)
+    execute_moving(dt) if should_move?
   end
 
   def should_move?()
     raise "should_move? is not implemented in #{self.class}"
   end
 
-  def time_to_move?(time_elapsed)
-    @move_timer += time_elapsed
-    if(@move_timer >= @move_after)
-      @move_timer -= @move_after
-      return true
-    else
-      return false
-    end
-  end
 
-  def exectue_moving()
+  def get_image(img_name)
+    return Rubygame::Surface.load("./visualization/img/" + img_name)
+  end
+  def exectue_moving(dt)
 
   end
 
