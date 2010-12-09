@@ -15,7 +15,7 @@ require "./visualization/battle_visualizer.rb"
 class Visualization
   attr_reader :sky_height
 	def initialize(battle)
-    @battle_stepper = BattleStepper.new(battle,1000)
+    @battle_stepper = BattleStepper.new(battle,5000)
 
 		Rubygame.init
     maximum_resolution = Rubygame::Screen.get_resolution

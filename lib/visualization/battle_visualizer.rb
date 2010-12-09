@@ -53,8 +53,8 @@ class BattleVisualizer
   end
 
 
-  def update(miliseconds_elasped)
-    @unit_sprites.update(miliseconds_elasped)
+  def update(dt)
+    @unit_sprites.update(dt)
   end
 
   def draw(to_surface)
