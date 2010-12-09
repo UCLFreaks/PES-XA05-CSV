@@ -7,7 +7,7 @@ class Sky
     @height = sky_height
     @sky_sprites = SpriteGroup.new
 
-    (rand(17) + 3).times do
+    rand(20).times do
       @sky_sprites << Cloud.new(sky_width,sky_height)
     end
   end

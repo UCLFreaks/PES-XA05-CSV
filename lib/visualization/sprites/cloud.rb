@@ -7,7 +7,7 @@ class Cloud < BasicSprite
     super()
     @image = get_image("cloud.png")
     @image = @image.flip(true, false) if rand(2) == 1
-    @image = @image.zoom(rand,rand)
+    @image = @image.zoom([0.2,rand].max,[0.2,rand].max)
     @velocity = [rand(7)+1,0.0]
     @position = [rand(sky_width),rand(sky_height/2)]
     @sky_width = sky_width
