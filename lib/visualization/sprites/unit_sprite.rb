@@ -3,13 +3,13 @@
 
 require "./visualization/linear_movement.rb"
 class UnitSprite < BasicSprite
+  attr_reader :state
   include LinearMovement
 
   DEPTH_LEVELS = 12
   UNIT_Y = 46
   UNIT_X = 46
 
-  MOVEMENT_ERROR_TOLERATION = 2
 
   def initialize(unit,team,vizualizer)
     super()
@@ -22,7 +22,7 @@ class UnitSprite < BasicSprite
     @image = get_image(unit, team,@state)
     @position = [@v.sim_to_vis_x(@unit.position),depth_to_y]
     @last_sim_x = unit.position
-    @max_velocity = 10
+    
     
 
     
@@ -34,20 +34,24 @@ class UnitSprite < BasicSprite
     if([:living,:moving].include?(@state) and @unit.lives <= 0)
          new_state = :dead
          @image = get_image(@unit, @team, new_state)
+         @v.busy_units.delete(self)
     end
     if(@state == :living and @last_sim_x != @unit.position)
       new_state = :moving
       @destination = @v.sim_to_vis_x(@unit.position)
+      @v.busy_units.add(self)
     end
     if(@state == :moving)
       distance =   @destination - @position[0]
-      (distance > 0)? @velocity = [@max_velocity,0]:@velocity = [-@max_velocity,0]
+      (distance > 0)? @velocity = [max_velocity,0]:@velocity = [-max_velocity,0]
       x_position_before = @position[0]
       move(miliseconds_elapsed)
-      if((x_position_before-@destination).abs < (@position[0] - @destination))
+      if((x_position_before-@destination).abs <= (@position[0] - @destination) or
+          @position[0] == @destination)
         new_state = :living
         @position = [@destination,@position[1]]
         @destination = nil
+        @v.busy_units.delete(self)
       end
     end
     @last_sim_x = @unit.position
@@ -93,6 +97,11 @@ class UnitSprite < BasicSprite
   def sprite_size()
     return [UNIT_X,UNIT_Y]
   end
+  
+  def max_velocity
+    return 20
+  end
+  
   def get_image_base_name(state)
     return "soldier"
   end

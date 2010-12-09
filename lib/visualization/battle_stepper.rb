@@ -12,8 +12,8 @@ class BattleStepper
 
   def update(time_elapsed)
     @current_time += time_elapsed
-    if(@current_time >= @step_after and @step < 1)
-      @current_time -= @step_after
+    if(@current_time > @step_after)
+      @current_time = 0
       @battle.make_step
       @step += 1
     end
