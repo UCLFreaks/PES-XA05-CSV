@@ -3,6 +3,7 @@
 require "./visualization/rubygame/lib/rubygame.rb"
 module Visualization
 require "./visualization/background.rb"
+require "./visualization/sky.rb"
 require "./visualization/sprites/sprite_group.rb"
 require "./visualization/sprites/basic_sprite.rb"
 
@@ -21,6 +22,7 @@ class Visualization
     @resolution = [maximum_resolution[0] - 60, 200]
     puts "This display can manage at least " + maximum_resolution.join("x")
     @sky_height = @resolution[1]/2
+    @sky = Sky.new(@resolution[0],sky_height)
     @battle_visualizer = BattleVisualizer.new(battle,@resolution,@sky_height)
     @screen = Rubygame::Screen.new [@resolution[0], @resolution[1]], 0, [Rubygame::HWSURFACE, Rubygame::DOUBLEBUF]
 		@screen.title = "PES XA05 VISUALIZATION!"
@@ -55,11 +57,13 @@ class Visualization
 			end
 		end
     @battle_stepper.update(time_elapsed)
+    @sky.update(time_elapsed)
     @battle_visualizer.update(time_elapsed)
 	end
 
 	def draw
     @background.draw(@screen)
+    @sky.draw(@screen)
     @battle_visualizer.draw(@screen)
     @screen.flip
     
