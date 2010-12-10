@@ -36,7 +36,7 @@ class UnitSprite < BasicSprite
          @image = get_image(@unit, @team, new_state)
          @v.busy_units.delete(self)
     end
-    if(@state == :living and @last_sim_x != @unit.position)
+    if(@state == :living and [:move,:retrat,:crawl].include?(@unit.last_action))
       new_state = :moving
       @destination = @v.sim_to_vis_x(@unit.position)
       @v.busy_units.add(self)
