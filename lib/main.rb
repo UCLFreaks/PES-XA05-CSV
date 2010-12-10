@@ -1,5 +1,6 @@
 require './simulation/simulation.rb'
 require './visualization/simulation_extension.rb'
+require './visualization/unit_extensions.rb'
 require './visualization/visualization.rb'
 
 

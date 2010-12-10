@@ -46,8 +46,7 @@ class UnitSprite < BasicSprite
       (distance > 0)? @velocity = [max_velocity,0]:@velocity = [-max_velocity,0]
       x_position_before = @position[0]
       move(miliseconds_elapsed)
-      if((x_position_before-@destination).abs <= (@position[0] - @destination) or
-          @position[0] == @destination)
+      if((x_position_before-@destination).abs < (@position[0] - @destination).abs or @destination.round == @position[0].round)
         new_state = :living
         @position = [@destination,@position[1]]
         @destination = nil
