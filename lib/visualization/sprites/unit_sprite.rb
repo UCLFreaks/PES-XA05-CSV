@@ -35,11 +35,13 @@ class UnitSprite < BasicSprite
          new_state = :dead
          @image = get_image(@unit, @team, new_state)
          @v.busy_units.delete(self)
+         
     end
     if(@state == :living and [:move,:retrat,:crawl].include?(@unit.last_action))
       new_state = :moving
       @destination = @v.sim_to_vis_x(@unit.position)
       @v.busy_units.add(self)
+      
     end
     if(@state == :moving)
       distance =   @destination - @position[0]
@@ -51,10 +53,12 @@ class UnitSprite < BasicSprite
         @position = [@destination,@position[1]]
         @destination = nil
         @v.busy_units.delete(self)
+        
       end
     end
     @last_sim_x = @unit.position
     @state = new_state
+    @unit.clear_last_action
   end
   
   def depth_to_y
@@ -66,9 +70,9 @@ class UnitSprite < BasicSprite
   end
 
   def draw(to_surface)
-
     @image.blit(to_surface,[@position[0]-sprite_size[0]/2,@position[1]])
   end
+
 
   def get_image(unit,team,state)
     if(team == :team1)
@@ -87,18 +91,29 @@ class UnitSprite < BasicSprite
     end
 
 
-
     image = super(get_image_base_name(state)+team_suffix+state_suffix+'.png')
     image = image.flip(true, false) if @direction == :left
     image = image.zoom_to(sprite_size[0], sprite_size[1],true)
     return image
   end
+
+
   def sprite_size()
     return [UNIT_X,UNIT_Y]
   end
   
   def max_velocity
     return 20
+  end
+
+
+
+  def print_busy_units
+    puts ""
+    @v.busy_units.each do |unit|
+      puts "#{unit.id} #{unit.state}"
+    end
+    puts ""
   end
   
   def get_image_base_name(state)

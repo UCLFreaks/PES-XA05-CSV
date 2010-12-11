@@ -46,6 +46,8 @@ class BasicSprite
   def get_image(img_name)
     return Rubygame::Surface.load("./visualization/img/" + img_name)
   end
+  
+
   def exectue_movement(dt)
     raise "Execute movement is not implemented for #{self.class}"
   end

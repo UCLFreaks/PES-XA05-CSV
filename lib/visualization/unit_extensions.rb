@@ -11,6 +11,11 @@ module UnitReportMethods
     super()
   end
 
+  def clear_last_action
+    @last_action = nil
+    @fired_at = nil
+  end
+
   def fire_in_range
     if enemy and enemy_distance < @range and lives > 0
       @enemy.recieve_damage(@damage)
