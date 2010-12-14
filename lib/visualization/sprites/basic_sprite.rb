@@ -1,6 +1,4 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-
+#Class that implements basic sprite needs.
 class BasicSprite
   include Rubygame::Sprites::Sprite
   attr_reader :depth
@@ -11,7 +9,8 @@ class BasicSprite
     @position = [0.0,0.0]
   end
 
-
+  #Draws the sprite to the surface.
+  # []
   def draw(to_surface)
     @image.blit(to_surface,[@position[0].round,@position[1].round])
   end
@@ -44,7 +43,7 @@ class BasicSprite
 
 
   def get_image(img_name)
-    return Rubygame::Surface.load("./visualization/img/" + img_name)
+    img =  Rubygame::Surface.load("./visualization/img/" + img_name)
   end
   
 

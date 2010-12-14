@@ -21,11 +21,7 @@ class UnitSprite < BasicSprite
     @direction = :left if @unit.position > 0
     @image = get_image(unit, team,@state)
     @position = [@v.sim_to_vis_x(@unit.position),depth_to_y]
-    @last_sim_x = unit.position
-    
-    
-
-    
+    @last_sim_x = unit.position    
   end
 
   def update(miliseconds_elapsed)
@@ -62,7 +58,7 @@ class UnitSprite < BasicSprite
   end
   
   def depth_to_y
-    return @v.sky_height - sprite_size[1] +  -@depth * (@v.world_size[1]-@v.sky_height)/DEPTH_LEVELS
+    return @v.sky_height - sprite_size[1] +  - @depth * (@v.world_size[1]-@v.sky_height)/DEPTH_LEVELS
   end
 
   def should_move?

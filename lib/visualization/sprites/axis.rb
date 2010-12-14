@@ -22,7 +22,6 @@ class Axis < BasicSprite
       x = @visualizer.sim_to_vis_x(sim_x)
       puts "#{sim_x} to #{x}"
       surface.draw_box_s([x-1,0], [x+1,20], [255,0,0])
-      
     end
     return surface
   end
