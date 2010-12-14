@@ -9,21 +9,33 @@ class AnimatedSprite < BasicSprite
     @animation_time = 0
     @current_animation = Hash.new
     setup_animation
+    
   end
 
   def update(dt)
-    super()
     update_animation(dt)
+  end
+
+
+  def draw(to_surface)
+    @image.blit(to_surface, [@position[0].round,@position[0].round], current_clip_rect)
   end
 
   private
 
-  def add_animation(name,period,repeat = true,frames=@number_of_frames)
+
+
+
+  def add_animation(name,period,repeat = true,frames=number_of_frames)
+    #frames = number_of_frames if frames == nil
+    puts "frames je: #{frames}"
     @animations[name] = {"frames"=>frames,"period"=>period,"repeat"=>repeat,"y"=>@animations.count}
+    puts "adding animation"
+    p @animations[name]
   end
 
   def set_animation(name)
-    @current_animation = @animation[name]
+    @current_animation = @animations[name]
     @current_animation['frame_length'] = @current_animation['period']/@current_animation['frames']
     @current_animation['frame'] = 1
   end
@@ -45,18 +57,26 @@ class AnimatedSprite < BasicSprite
   end
 
   def current_clip_rect()
-    return Rubygame::Rect.new(frame_size[0]*@current_animation['frame'],frame_size[1]*@current_animation['y'],frame_size[0],frame_size[1])
+    return Rubygame::Rect.new(frame_size[0]*(@current_animation['frame']-1),frame_size[1]*@current_animation['y'],frame_size[0],frame_size[1])
   end
 
   def update_animation(dt)
     ca = @current_animation
+    #puts "Animation time is #{}"
     @animation_time += dt
     if(@animation_time >= ca['frame_length'])
       (ca['frame'] < ca['frames'])? ca['frame'] += 1 : ca['frame'] = 1
       @animation_time -= ca['frame_length']
-      @image.clip = current_clip_rect
+      #puts "Current frame is #{ca['frame']}"
+      #puts "Current clip is #{current_clip_rect}"
+
+      
+
+
     end
   end
+
+
 
 
   

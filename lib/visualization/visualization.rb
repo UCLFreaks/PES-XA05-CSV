@@ -6,7 +6,8 @@ require "./visualization/background.rb"
 require "./visualization/sky.rb"
 require "./visualization/sprites/sprite_group.rb"
 require "./visualization/sprites/basic_sprite.rb"
-
+require "./visualization/sprites/animated_sprite.rb"
+require "./visualization/sprites/status.rb"
 
 
 require "./visualization/battle_stepper.rb"
@@ -34,6 +35,7 @@ class Visualization
     @clock.enable_tick_events
     
     @background = Background.new(@resolution,@sky_height)
+    @status  = Status.new
 
 
 	end
@@ -59,12 +61,14 @@ class Visualization
     @battle_stepper.update(time_elapsed) if @battle_visualizer.animation_step_finnished?
     @sky.update(time_elapsed)
     @battle_visualizer.update(time_elapsed)
+    @status.update(time_elapsed)
 	end
 
 	def draw
     @background.draw(@screen)
     @sky.draw(@screen)
     @battle_visualizer.draw(@screen)
+    @status.draw(@screen)
     @screen.flip
     
 	end
