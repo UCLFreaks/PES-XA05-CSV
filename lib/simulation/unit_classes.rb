@@ -26,7 +26,12 @@ module UnitMethods
   def fire
     fire_in_range
   end
-  
+
+	def alive?
+		return (@lives > 0)
+	end
+
+
   private 
 
   def fire_in_range

@@ -10,9 +10,5 @@ army1 = Army.new(units1, SimulationStrategy.new)
 army2 = Army.new(units2, SimulationStrategy.new)
 battle = BattleProgram.new(army1,army2)
 
-
-
 vis = Visualization::Visualization.new(battle)
 vis.run
-
-  

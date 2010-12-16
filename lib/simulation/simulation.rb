@@ -29,14 +29,31 @@ end
 
 class SimulationStrategy
   def step(army1, army2)
-    s1 = army1.units.first
-    s2 = army2.units.first
-    s1.enemy = s2
-    if s1.enemy_distance >= s1.range
-      s1.move
-    else
-      s1.fire
-    end
+		army1.units.select{|unit| unit.alive? }.each_with_index { |unit,key|
+
+			enemies = army2.units.select { |unit| unit.alive? }
+			unit.enemy = enemies[rand(enemies.length-1)]
+			if(unit.enemy_distance > unit.range)
+				unit.move
+			else
+				unit.fire
+			end
+			
+		}
+
+
+
+		
+
+
+#    s1 = army1.units.first
+#    s2 = army2.units.first
+#    s1.enemy = s2
+#    if s1.enemy_distance >= s1.range
+#      s1.move
+#    else
+#      s1.fire
+#    end
   end
 end
 
