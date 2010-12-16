@@ -12,5 +12,3 @@ battle = BattleProgram.new(army1,army2)
 
 vis = Visualization::Visualization.new(battle)
 vis.run
-
-  
