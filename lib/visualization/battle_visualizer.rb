@@ -5,10 +5,13 @@ require "./visualization/sprites/unit_sprite.rb"
 require "./visualization/sprites/soldier_sprite.rb"
 require "./visualization/sprites/sniper_sprite.rb"
 require "./visualization/sprites/tank_sprite.rb"
+require "set"
 
 class BattleVisualizer
   attr_reader :battle,:range,:world_size,:axis,:margin,:sky_height
+  attr_accessor :busy_units
   def initialize(battle_program,world_size,sky_height)
+    @busy_units = Set.new
     @battle = battle_program
     @range = get_range
     @world_size = world_size
@@ -53,13 +56,17 @@ class BattleVisualizer
   end
 
 
-  def update(miliseconds_elasped)
-    @unit_sprites.update(miliseconds_elasped)
+  def update(dt)
+    @unit_sprites.update(dt)
   end
 
   def draw(to_surface)
     #@axis.draw(to_surface)
     @unit_sprites.draw(to_surface)
+  end
+  
+  def animation_step_finnished?
+    return @busy_units.empty?
   end
 
   private

@@ -20,9 +20,8 @@ class Axis < BasicSprite
     (@visualizer.number_of_ticks() + 1).times do |sim_tick|
       sim_x = @visualizer.range[0] + sim_tick
       x = @visualizer.sim_to_vis_x(sim_x)
-      puts "#{sim_x} to #{x}"
+      #puts "#{sim_x} to #{x}"
       surface.draw_box_s([x-1,0], [x+1,20], [255,0,0])
-      
     end
     return surface
   end

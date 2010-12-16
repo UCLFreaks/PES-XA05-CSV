@@ -1,54 +1,54 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-
+#Class that implements basic sprite needs.
 class BasicSprite
   include Rubygame::Sprites::Sprite
   attr_reader :depth
   
   def initialize
     @groups = []
-    @destiination = nil
-    @move_timer = 0
-    @move_after = 20
+    @velocity = [0.0,0.0] #Velocity vector is in pixels per second
+    @position = [0.0,0.0]
   end
 
-
+  #Draws the sprite to the surface.
+  # []
   def draw(to_surface)
-    @image.blit(to_surface,@position)
+    @image.blit(to_surface,[@position[0].round,@position[1].round])
   end
 
-  def speed
-    raise "Speed for #{self.class} is not defined!"
+  def velocity
+    return @velocity
+  end
+  def velocity=(vel)
+    @velocity = vel
   end
 
-  def set_position(pos)
+  def position=(pos)
     @position = pos
   end
-
-  def move_to(pos)
-    @destination = pos
+  
+  def position_x=(x)
+    @position = [x,@position[1]]
+  end
+  def position_y=(y)
+    @position = [@position[0],y]
   end
 
-  def move(time_elapsed)
-    execute_moving if should_move? and time_to_move?(time_elapsed)
+  def move(dt)
+    execute_movement(dt) if should_move?
   end
 
   def should_move?()
-    raise "should_move? is not implemented in #{self.class}"
+    raise "should_move? is not implemented for #{self.class}"
   end
 
-  def time_to_move?(time_elapsed)
-    @move_timer += time_elapsed
-    if(@move_timer >= @move_after)
-      @move_timer -= @move_after
-      return true
-    else
-      return false
-    end
+
+  def get_image(img_name)
+    img =  Rubygame::Surface.load("./visualization/img/" + img_name)
   end
+  
 
-  def exectue_moving()
-
+  def exectue_movement(dt)
+    raise "Execute movement is not implemented for #{self.class}"
   end
 
   def sprite_size
