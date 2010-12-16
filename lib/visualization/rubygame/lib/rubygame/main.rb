@@ -19,8 +19,8 @@
 
 
 
-require "ruby-sdl-ffi/sdl"
-
+#require "ruby-sdl-ffi/sdl"
+require "rubygems"
 
 module Rubygame
 
