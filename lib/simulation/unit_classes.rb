@@ -125,7 +125,7 @@ class Tank
   include UnitMethods
   def initialize(position,name)
     @lives = 50
-    @range = 5
+    @range = 10
     @damage = 30
     @speed = 6
     @shells = 10
