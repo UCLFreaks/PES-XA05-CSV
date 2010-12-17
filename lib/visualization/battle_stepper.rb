@@ -19,7 +19,8 @@ class BattleStepper
 				@step += 1
 			end
 		else
-			exit
+			puts "Konec :)"
+			#exit
 		end
   end
 
