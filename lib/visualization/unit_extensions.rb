@@ -20,7 +20,6 @@ module UnitReportMethods
     if enemy and enemy_distance < @range and lives > 0
       @enemy.recieve_damage(@damage)
       @last_action = :fire_hit
-
     else
       @last_action = :fire_miss
     end

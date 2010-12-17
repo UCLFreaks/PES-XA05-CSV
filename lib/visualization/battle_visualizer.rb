@@ -68,6 +68,10 @@ class BattleVisualizer
   def animation_step_finnished?
     return @busy_units.empty?
   end
+  
+  def get_unit_sprite(unit)
+    return @unit_sprites.find{ |unit_sprite| unit_sprite.unit == unit  }
+  end
 
   private
   def get_range

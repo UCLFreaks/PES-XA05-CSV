@@ -34,7 +34,7 @@ class SimulationStrategy
 			enemies = army2.units.select { |unit| unit.alive? }
 			unit.enemy = enemies[rand(enemies.length-1)]
 			if(unit.enemy_distance > unit.range)
-				puts unit.name + ' se hýbe '
+				puts unit.name + ' v ' + unit.class.to_s + ' se hýbe '
 				unit.move
 			else
 				puts unit.name + ' střílí na '+ unit.enemy.name if unit.enemy != nil
