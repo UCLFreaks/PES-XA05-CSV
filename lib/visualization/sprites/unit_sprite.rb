@@ -3,7 +3,7 @@
 
 require "./visualization/linear_movement.rb"
 class UnitSprite < BasicSprite
-  attr_reader :state
+  attr_reader :state,:unit
   include LinearMovement
 
   DEPTH_LEVELS = 12
@@ -23,21 +23,36 @@ class UnitSprite < BasicSprite
     @position = [@v.sim_to_vis_x(@unit.position),depth_to_y]
     @last_sim_x = unit.position    
   end
+  
+  def hit
+    if(@unit.lives <= 0)
+         @state = :dead
+         puts "Diyng"
+         @image = get_image(@unit, @team, @state)
+    end
+         @v.busy_units.delete(self)    
+  end
+  
+  def make_busy
+    @v.busy_units << (self)
+  end
 
   def update(miliseconds_elapsed)
     #@position = [@v.sim_to_vis_x(@unit.position),@position[1]]
     new_state = @state
-    if([:living,:moving].include?(@state) and @unit.lives <= 0)
-         new_state = :dead
-         @image = get_image(@unit, @team, new_state)
-         @v.busy_units.delete(self)
-         
+
+    
+    if(@unit.last_action == :fire_hit)
+      puts "Firing"
+      target_unit_sprite = @v.get_unit_sprite(unit.fired_at)
+      target_unit_sprite.make_busy
+      target_unit_sprite.hit
     end
+    
     if(@state == :living and [:move,:retrat,:crawl].include?(@unit.last_action))
       new_state = :moving
       @destination = @v.sim_to_vis_x(@unit.position)
       @v.busy_units.add(self)
-      
     end
     if(@state == :moving)
       distance =   @destination - @position[0]
