@@ -29,18 +29,27 @@ end
 
 class SimulationStrategy
   def step(army1, army2)
-		army1.units.select{|unit| unit.alive? }.each_with_index { |unit,key|
 
-			enemies = army2.units.select { |unit| unit.alive? }
-			unit.enemy = enemies[rand(enemies.length-1)]
+		enemies = army2.units.select { |unite| unite.alive? }
+
+			nearest = enemies[0]
+			enemies.each{|enemy|
+				if(enemy.position.abs < nearest.position.abs)
+					nearest = enemy
+				end
+			}
+
+		army1.units.select{|unit| unit.alive? }.each { |unit|
+
+			unit.enemy = nearest
 			if(unit.enemy_distance > unit.range)
+				puts unit.name + ' v ' + unit.class.to_s + ' se hýbe '
 				unit.move
 			else
+				puts unit.name + ' střílí na '+ unit.enemy.name if unit.enemy != nil
 				unit.fire
-			end
-			
+			end	
 		}
-
 
 
 		
