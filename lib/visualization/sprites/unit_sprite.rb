@@ -2,8 +2,9 @@
 # and open the template in the editor.
 
 require "./visualization/linear_movement.rb"
+require "./visualization/sprites/shot.rb"
 class UnitSprite < BasicSprite
-  attr_reader :state,:unit
+  attr_reader :state,:unit,:position
   include LinearMovement
 
   DEPTH_LEVELS = 12
@@ -22,12 +23,13 @@ class UnitSprite < BasicSprite
     @image = get_image(unit, team,@state)
     @position = [@v.sim_to_vis_x(@unit.position),depth_to_y]
     @last_sim_x = unit.position    
+    @shot = nil
+    @wait = 0
   end
   
   def hit
     if(@unit.lives <= 0)
          @state = :dead
-         puts "Diyng"
          @image = get_image(@unit, @team, @state)
     end
          @v.busy_units.delete(self)    
@@ -36,6 +38,7 @@ class UnitSprite < BasicSprite
   def make_busy
     @v.busy_units << (self)
   end
+  
 
   def update(miliseconds_elapsed)
     #@position = [@v.sim_to_vis_x(@unit.position),@position[1]]
@@ -43,10 +46,9 @@ class UnitSprite < BasicSprite
 
     
     if(@unit.last_action == :fire_hit)
-      puts "Firing"
       target_unit_sprite = @v.get_unit_sprite(unit.fired_at)
       target_unit_sprite.make_busy
-      target_unit_sprite.hit
+      @shot = Shot.new(self,target_unit_sprite)
     end
     
     if(@state == :living and [:move,:retrat,:crawl].include?(@unit.last_action))
@@ -70,6 +72,10 @@ class UnitSprite < BasicSprite
     @last_sim_x = @unit.position
     @state = new_state
     @unit.clear_last_action
+    if( @shot != nil)
+      @shot.update(miliseconds_elapsed) 
+      @shot = nil if @shot.status == :inactive
+    end
   end
   
   def depth_to_y
@@ -81,6 +87,7 @@ class UnitSprite < BasicSprite
   end
 
   def draw(to_surface)
+    @shot.draw(to_surface) if @shot != nil
     @image.blit(to_surface,[@position[0]-sprite_size[0]/2,@position[1]])
   end
 
