@@ -25,6 +25,7 @@ class UnitSprite < BasicSprite
     @last_sim_x = unit.position    
     @shot = nil
     @wait = 0
+    @state_after_wait = nil
   end
   
   def hit
@@ -38,17 +39,44 @@ class UnitSprite < BasicSprite
   def make_busy
     @v.busy_units << (self)
   end
-  
 
-  def update(miliseconds_elapsed)
+  def wait_for(miliseconds,new_state,param)
+    @wait = miliseconds
+    @state_after_wait = new_state
+    @wait_param = param
+    make_busy
+  end
+
+
+  def update(dt)
     #@position = [@v.sim_to_vis_x(@unit.position),@position[1]]
+    if(@wait > 0)
+      @wait -= dt
+      if(@wait <= 0)
+        @state = @state_after_wait
+        @state_after_wait = nil
+        @wait = 0
+        @v.busy_units.delete(self)
+      end
+    end
     new_state = @state
 
     
     if(@unit.last_action == :fire_hit)
-      target_unit_sprite = @v.get_unit_sprite(unit.fired_at)
+      target_unit_sprite = @v.get_unit_sprite(@unit.fired_at)
       target_unit_sprite.make_busy
+      if (@unit.lives >0)
+        wait_for(rand(1000),:shoot,target_unit_sprite)
+      else
+        @shot = Shot.new(self,target_unit_sprite)
+      end
+      
+    end
+
+    if(@state == :shoot)
+      target_unit_sprite = @wait_param
       @shot = Shot.new(self,target_unit_sprite)
+      new_state = @state = :living
     end
     
     if(@state == :living and [:move,:retrat,:crawl].include?(@unit.last_action))
@@ -60,7 +88,7 @@ class UnitSprite < BasicSprite
       distance =   @destination - @position[0]
       (distance > 0)? @velocity = [max_velocity,0]:@velocity = [-max_velocity,0]
       x_position_before = @position[0]
-      move(miliseconds_elapsed)
+      move(dt)
       if((x_position_before-@destination).abs < (@position[0] - @destination).abs or @destination.round == @position[0].round)
         new_state = :living
         @position = [@destination,@position[1]]
@@ -73,7 +101,7 @@ class UnitSprite < BasicSprite
     @state = new_state
     @unit.clear_last_action
     if( @shot != nil)
-      @shot.update(miliseconds_elapsed) 
+      @shot.update(dt)
       @shot = nil if @shot.status == :inactive
     end
   end

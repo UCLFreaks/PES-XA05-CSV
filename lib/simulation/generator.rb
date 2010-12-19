@@ -8,18 +8,18 @@ def create_units(dir)
 
 
   unit_weights = {
-    "Soldier" => 5,
+    "Soldier" => 50,
     "Captain" => 0,
     "Elite" => 0,
     "Sniper" => 0,
-    "Tank" => 1
+    "Tank" => 0
   }
 
   units = []
   unit_weights.each do |key,val|
     val.times do
-      pos = rand(95)*dir+5
-			units << Object::const_get(key).new(pos,ranking.choice + ' '+ names.choice)
+      pos = rand(10)*dir
+			units << Object::const_get(key).new(pos,ranking[0] + ' '+ names[0])
     end
 
   end
