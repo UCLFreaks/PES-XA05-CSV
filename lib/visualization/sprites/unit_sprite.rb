@@ -3,15 +3,23 @@
 
 require "./visualization/linear_movement.rb"
 require "./visualization/sprites/shot.rb"
+#Visual representation of unit
 class UnitSprite < BasicSprite
   attr_reader :state,:unit,:position
   include LinearMovement
 
+  #Number of y lines that units are placed onto.
   DEPTH_LEVELS = 12
+  #Size of unit
   UNIT_Y = 46
   UNIT_X = 46
 
-
+  #Creates the unit sprite.
+  #
+  #Parameters:
+  # - unit unit object of this sprite
+  # - team can be :team1 (blue) or :team2 (red)
+  # - visualizer the encapsulating BattleVisualizer
   def initialize(unit,team,vizualizer)
     super()
     @v = vizualizer
@@ -27,7 +35,9 @@ class UnitSprite < BasicSprite
     @wait = 0
     @state_after_wait = nil
   end
-  
+
+  #Informes the unit_sprite about hit by a shot. It checks whether the the unit
+  #died and removes it from the busy_units list of the encapsulating BattleVisualizer.
   def hit
     if(@unit.lives <= 0)
          @state = :dead
@@ -35,15 +45,11 @@ class UnitSprite < BasicSprite
     end
          @v.busy_units.delete(self)    
   end
-  
+
+  #Adds the unit_sprite to the busy_units list of the encapsulating BattleVisualizer
+  #thus signalizing that this unit didn't finished yet its action this turn.
   def make_busy
     @v.busy_units << (self)
-  end
-
-  def wait_for(miliseconds,new_state)
-    @wait = miliseconds
-    @state_after_wait = new_state
-    make_busy
   end
 
   def react_to_last_action
@@ -67,7 +73,8 @@ class UnitSprite < BasicSprite
     end
   end
 
-
+#Updates the state of the UnitSprite according to current @state of it.
+# - _dt_ is number of miliseconds passed since last update call
   def update(dt)
     #@position = [@v.sim_to_vis_x(@unit.position),@position[1]]
     if(@wait > 0)
@@ -79,10 +86,6 @@ class UnitSprite < BasicSprite
       end
     end
     new_state = @state
-
-    
-
-
     if(@state == :shoot)
       shoot
       new_state = @state = :living
@@ -106,18 +109,21 @@ class UnitSprite < BasicSprite
       @shot = nil if @shot.status == :inactive
     end
   end
-  
-  def depth_to_y
-    return @v.sky_height - sprite_size[1] +  - @depth * (@v.world_size[1]-@v.sky_height)/DEPTH_LEVELS
+
+#Draws the unit to the designated surface
+  def draw(to_surface)
+    @shot.draw(to_surface) if @shot != nil
+    @image.blit(to_surface,[@position[0]-sprite_size[0]/2,@position[1]])
   end
+
+private
 
   def should_move?
     return true if @destination != nil
   end
 
-  def draw(to_surface)
-    @shot.draw(to_surface) if @shot != nil
-    @image.blit(to_surface,[@position[0]-sprite_size[0]/2,@position[1]])
+  def depth_to_y
+    return @v.sky_height - sprite_size[1] +  - @depth * (@v.world_size[1]-@v.sky_height)/DEPTH_LEVELS
   end
 
   def shoot()
@@ -150,30 +156,32 @@ class UnitSprite < BasicSprite
     return image
   end
 
-
+  #Returns the sprite size as an [x,y] array
   def sprite_size()
     return [UNIT_X,UNIT_Y]
   end
-  
+
+  #Returns the maximal velocity of the unit
   def max_velocity
     return 40
   end
 
+  #Returns the minimal velocity of the unit
   def min_velocity
     return 20
   end
 
-  def print_busy_units
-    puts ""
-    @v.busy_units.each do |unit|
-      puts "#{unit.id} #{unit.state}"
-    end
-    puts ""
-  end
   
   def get_image_base_name(state)
     return "soldier"
   end
 
+  #Adds the unit to the busy_list and sets the _new_state_ after _miliseconds_ passed.
+  # Important! You have to remove the unit from busy_list yourself!
+  def wait_for(miliseconds,new_state)
+    @wait = miliseconds
+    @state_after_wait = new_state
+    make_busy
+  end
 
 end
