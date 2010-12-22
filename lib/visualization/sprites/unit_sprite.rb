@@ -5,7 +5,7 @@ require "./visualization/linear_movement.rb"
 require "./visualization/sprites/shot.rb"
 #Visual representation of unit
 class UnitSprite < BasicSprite
-  attr_reader :state,:unit,:position
+  attr_reader :state,:unit,:position,:weapon_hardpoint
   include LinearMovement
 
   #Number of y lines that units are placed onto.
@@ -40,6 +40,9 @@ class UnitSprite < BasicSprite
     @position = [@v.sim_to_vis_x(@unit.position),depth_to_y]
     #Last unit's simulation x
     @last_sim_x = unit.position
+    #weapon hardpoint - point from which the shots originate
+    @weapon_hardpoint = [0,0]
+    #unit weapon
     @weapon = default_weapon
     #DEPRECATED
     @shot = nil
@@ -49,7 +52,7 @@ class UnitSprite < BasicSprite
     @state_after_wait = nil
   end
 
-  #Informes the unit_sprite about hit by a shot. It checks whether the the unit
+  #Informs the unit_sprite about hit by a shot. It checks whether the the unit
   #died and removes it from the busy_units list of the encapsulating BattleVisualizer.
   def hit
     if(@unit.lives <= 0)
@@ -186,9 +189,23 @@ private
 
   #Returns default weapon of the unit
   def default_weapon
-
+    return TankGun.new(self)
   end
 
+  #Returns the relative weapon hardpoint coordinates for the right facing unit.
+  def relative_weapon_hardpoint
+    return [0,0]
+  end
+
+  #calculates the actual position of the hardpoint after scaling and rotation
+  def calculate_actual_weapon_hardpoint
+    if(@direction == :left)
+      hc = relative_weapon_hardpoint
+      return [sprite_size[0] - hc[0],sprite_size[1] - hc[1]]
+    else
+      return relative_weapon_hardpoint
+    end
+  end
   
   def get_image_base_name(state)
     return "soldier"
