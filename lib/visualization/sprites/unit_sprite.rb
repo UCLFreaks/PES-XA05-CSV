@@ -40,6 +40,7 @@ class UnitSprite < BasicSprite
     @position = [@v.sim_to_vis_x(@unit.position),depth_to_y]
     #Last unit's simulation x
     @last_sim_x = unit.position
+    @weapon = default_weapon
     #DEPRECATED
     @shot = nil
     #How much wait time is remaining in miliseconds.
@@ -181,6 +182,11 @@ private
   #Returns the minimal velocity of the unit
   def min_velocity
     return 20
+  end
+
+  #Returns default weapon of the unit
+  def default_weapon
+
   end
 
   

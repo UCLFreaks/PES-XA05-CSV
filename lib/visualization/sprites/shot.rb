@@ -1,32 +1,22 @@
 class Shot < BasicSprite
   attr_reader :status
-  def initialize(owner,target)
+  def initialize(source_position,target_position)
     super()
-    @target  = target
-    @owner = owner
-    @ttl = 400
-    @time = 0
+    @source_position = source_position
+    @target_position = target_position
     @status = :active
   end
   
   def update(dt)
-    @time += dt
-    if(@time > @ttl && @status == :active)
-      @status = :inactive
-      @target.hit
-    end
+    raise "Not implemented for #{self.class}"
   end
   
   def draw(to_surface)
-    if(@status == :active)
-      4.times do |i|
-        to_surface.draw_line_a([@owner.position[0],@owner.position[1]+32+i],
-          [@target.position[0],@target.position[1]+32+i],
-          [255,255,0])
-      end
-
-    end
+    raise "Not implemented for #{self.class}"
   end
-  
+
+  def flying?
+    return @status == :active
+  end
   
 end
