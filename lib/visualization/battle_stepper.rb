@@ -15,6 +15,7 @@ class BattleStepper
 			@current_time += time_elapsed
 			if(@current_time > @step_after)
 				@current_time = 0
+        puts "Round: #{@step}"
 				@battle.make_step
 				@step += 1
 			end
