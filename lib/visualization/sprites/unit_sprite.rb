@@ -60,6 +60,9 @@ class UnitSprite < BasicSprite
       wait_for(rand(1500),:moving)
       puts "#{self.class} is moving"
       @destination = @v.sim_to_vis_x(@unit.position)
+      distance =   @destination - @position[0]
+      current_velocity = max_velocity-min_velocity + rand(max_velocity-min_velocity)
+      (distance > 0)? @velocity = [current_velocity,0]:@velocity = [-current_velocity,0]
       @v.busy_units.add(self)
     end
   end
@@ -86,8 +89,6 @@ class UnitSprite < BasicSprite
     end
     
     if(@state == :moving)
-      distance =   @destination - @position[0]
-      (distance > 0)? @velocity = [max_velocity,0]:@velocity = [-max_velocity,0]
       x_position_before = @position[0]
       move(dt)
       if((x_position_before-@destination).abs < (@position[0] - @destination).abs or @destination.round == @position[0].round)
@@ -155,10 +156,12 @@ class UnitSprite < BasicSprite
   end
   
   def max_velocity
-    return 20
+    return 40
   end
 
-
+  def min_velocity
+    return 20
+  end
 
   def print_busy_units
     puts ""
