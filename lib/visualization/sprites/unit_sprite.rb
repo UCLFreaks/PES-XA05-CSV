@@ -40,11 +40,28 @@ class UnitSprite < BasicSprite
     @v.busy_units << (self)
   end
 
-  def wait_for(miliseconds,new_state,param)
+  def wait_for(miliseconds,new_state)
     @wait = miliseconds
     @state_after_wait = new_state
-    @wait_param = param
     make_busy
+  end
+
+  def react_to_last_action
+    if(@unit.last_action == :fire_hit)
+      if (@unit.lives >0)
+        wait_for(rand(1500),:shoot)
+      else
+        shoot
+      end
+    end
+    
+    if([:move,:retrat,:crawl].include?(@unit.last_action) and @state == :living)
+      #@state = :moving
+      wait_for(rand(1500),:moving)
+      puts "#{self.class} is moving"
+      @destination = @v.sim_to_vis_x(@unit.position)
+      @v.busy_units.add(self)
+    end
   end
 
 
@@ -56,34 +73,18 @@ class UnitSprite < BasicSprite
         @state = @state_after_wait
         @state_after_wait = nil
         @wait = 0
-        @v.busy_units.delete(self)
       end
     end
     new_state = @state
 
     
-    if(@unit.last_action == :fire_hit)
-      target_unit_sprite = @v.get_unit_sprite(@unit.fired_at)
-      target_unit_sprite.make_busy
-      if (@unit.lives >0)
-        wait_for(rand(1000),:shoot,target_unit_sprite)
-      else
-        @shot = Shot.new(self,target_unit_sprite)
-      end
-      
-    end
+
 
     if(@state == :shoot)
-      target_unit_sprite = @wait_param
-      @shot = Shot.new(self,target_unit_sprite)
+      shoot
       new_state = @state = :living
     end
     
-    if(@state == :living and [:move,:retrat,:crawl].include?(@unit.last_action))
-      new_state = :moving
-      @destination = @v.sim_to_vis_x(@unit.position)
-      @v.busy_units.add(self)
-    end
     if(@state == :moving)
       distance =   @destination - @position[0]
       (distance > 0)? @velocity = [max_velocity,0]:@velocity = [-max_velocity,0]
@@ -99,7 +100,6 @@ class UnitSprite < BasicSprite
     end
     @last_sim_x = @unit.position
     @state = new_state
-    @unit.clear_last_action
     if( @shot != nil)
       @shot.update(dt)
       @shot = nil if @shot.status == :inactive
@@ -119,6 +119,12 @@ class UnitSprite < BasicSprite
     @image.blit(to_surface,[@position[0]-sprite_size[0]/2,@position[1]])
   end
 
+  def shoot()
+      @v.busy_units.delete(self)
+      target_unit_sprite = @v.get_unit_sprite(@unit.fired_at)
+      target_unit_sprite.make_busy
+      @shot = Shot.new(self,target_unit_sprite)
+  end
 
   def get_image(unit,team,state)
     if(team == :team1)

@@ -16,12 +16,17 @@ class BattleStepper
 			if(@current_time > @step_after)
 				@current_time = 0
         puts "Round: #{@step}"
+        @battle.army1.units.each {|unit| unit.clear_last_action}
+        @battle.army2.units.each {|unit| unit.clear_last_action}
 				@battle.make_step
 				@step += 1
+        return :step_made
 			end
+      return :step_not_made
 		else
-			puts "Konec :)"
+			#puts "Konec :)"
 			#exit
+
 		end
   end
 

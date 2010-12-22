@@ -43,10 +43,10 @@ class SimulationStrategy
 
 			unit.enemy = nearest
 			if(unit.enemy_distance > unit.range)
-				puts unit.name + ' v ' + unit.class.to_s + ' se hýbe '
+				puts unit.name + ' v ' + unit.class.to_s + ' se hejbe '
 				unit.move
 			else
-				puts unit.name + ' střílí na '+ unit.enemy.name if unit.enemy != nil
+				puts unit.name + ' shoots at '+ unit.enemy.name if unit.enemy != nil
 				unit.fire
 			end	
 		}

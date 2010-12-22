@@ -9,7 +9,7 @@ require "set"
 
 class BattleVisualizer
   attr_reader :battle,:range,:world_size,:axis,:margin,:sky_height
-  attr_accessor :busy_units
+  attr_accessor :busy_units,:unit_sprites
   def initialize(battle_program,world_size,sky_height)
     @busy_units = Set.new
     @battle = battle_program
@@ -39,6 +39,8 @@ class BattleVisualizer
     end
     return sprites
   end
+
+
 
 
   def sim_to_vis_x(sim_x)
