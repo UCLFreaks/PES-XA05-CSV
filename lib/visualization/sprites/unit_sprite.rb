@@ -22,17 +22,29 @@ class UnitSprite < BasicSprite
   # - visualizer the encapsulating BattleVisualizer
   def initialize(unit,team,vizualizer)
     super()
+    #Encapsulating visualizer
     @v = vizualizer
+    #Coresponding unit to the sprite
     @unit = unit
+    #Team of the sprite
     @team = team
+    #Depth level
     @depth = -rand(DEPTH_LEVELS)
+    #Current state of the unit. (starting state is :living)
     @state = :living
-    @direction = :left if @unit.position > 0
+    #Unit facing direction
+    (@unit.position > 0)? @direction = :left : @direction = :right
+    #Sprite image
     @image = get_image(unit, team,@state)
+    #Position as an [x,y] array
     @position = [@v.sim_to_vis_x(@unit.position),depth_to_y]
-    @last_sim_x = unit.position    
+    #Last unit's simulation x
+    @last_sim_x = unit.position
+    #DEPRECATED
     @shot = nil
+    #How much wait time is remaining in miliseconds.
     @wait = 0
+    #Which state should be set after waiting.
     @state_after_wait = nil
   end
 
