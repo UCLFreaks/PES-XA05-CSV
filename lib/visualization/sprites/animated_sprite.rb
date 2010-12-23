@@ -18,7 +18,7 @@ class AnimatedSprite < BasicSprite
 
 
   def draw(to_surface)
-    @image.blit(to_surface, [@position[0].round,@position[0].round], current_clip_rect)
+    @image.blit(to_surface, [@position[0].round,@position[1].round], current_clip_rect)
   end
 
   private

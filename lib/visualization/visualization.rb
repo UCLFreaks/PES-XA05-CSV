@@ -10,7 +10,7 @@ require "./visualization/sprites/sprite_group.rb"
 require "./visualization/sprites/basic_sprite.rb"
 require "./visualization/sprites/animated_sprite.rb"
 require "./visualization/sprites/status.rb"
-
+require "./visualization/sprites/animated_soldier_test.rb"
 
 require "./visualization/battle_stepper.rb"
 require "./visualization/battle_visualizer.rb"
@@ -38,6 +38,7 @@ class Visualization
     
     @background = Background.new(@resolution,@sky_height)
     @status  = Status.new
+    @animated_soldier_test = AnimatedSoldierTest.new
 
 
 	end
@@ -51,7 +52,7 @@ class Visualization
 		end
 	end
 #this code is really spagetti one. I will make it better. I promise.
-	def update(time_elapsed)
+	def update(td)
 
     @queue.each do |ev|
 			case ev
@@ -62,14 +63,15 @@ class Visualization
 		end
     if @battle_visualizer.animation_step_finnished?
       #puts "Animation step finished"
-      result = @battle_stepper.update(time_elapsed)
+      result = @battle_stepper.update(td)
       if(result == :step_made)
         @battle_visualizer.unit_sprites.each{|sprite| sprite.react_to_last_action}
       end
     end
-    @sky.update(time_elapsed)
-    @battle_visualizer.update(time_elapsed)
-    @status.update(time_elapsed)
+    @sky.update(td)
+    @battle_visualizer.update(td)
+    @status.update(td)
+    @animated_soldier_test.update(td)
 	end
 
 	def draw
@@ -77,6 +79,7 @@ class Visualization
     @sky.draw(@screen)
     @battle_visualizer.draw(@screen)
     @status.draw(@screen)
+    @animated_soldier_test.draw(@screen)
     @screen.flip
     
 	end

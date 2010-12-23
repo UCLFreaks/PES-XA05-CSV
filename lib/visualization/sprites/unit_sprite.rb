@@ -15,8 +15,8 @@ class UnitSprite < BasicSprite
   #Number of y lines that units are placed onto.
   DEPTH_LEVELS = 12
   #Size of unit
-  UNIT_Y = 46
-  UNIT_X = 46
+  UNIT_Y = 64
+  UNIT_X = 64
 
   #Creates the unit sprite.
   #
