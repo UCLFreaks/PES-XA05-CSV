@@ -3,12 +3,16 @@
 
 class TankSprite < UnitSprite
 
-  def get_image_base_name(state)
+  def get_image_base_name()
     return "tank"
   end
 
   def setup_animation
-    add_animation(:idle, 500,false,1)
+    @number_of_frames = 1
+    add_animation(:dead, 750,false,1)
+    add_animation(:idle, 1000,false,1)
+    add_animation(:run, 500)
+    set_animation(:idle)
   end
   
 
