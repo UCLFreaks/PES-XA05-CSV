@@ -46,7 +46,7 @@ class SimulationStrategy
 				puts unit.name + ' v ' + unit.class.to_s + ' se hejbe '
 				unit.move
 			else
-				puts unit.name + ' shoots at '+ unit.enemy.name if unit.enemy != nil
+				puts unit.name + " (#{unit.object_id}) shoots at  #{unit.enemy.name} (#{unit.enemy.object_id}) " if unit.enemy != nil
 				unit.fire
 			end	
 		}

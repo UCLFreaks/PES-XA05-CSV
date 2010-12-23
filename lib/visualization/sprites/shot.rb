@@ -1,10 +1,11 @@
 class Shot < BasicSprite
-  attr_reader :status
-  def initialize(source_position,target_position)
+  attr_reader :status,:hitting
+  def initialize(weapon,source_position,target_position)
     super()
     @source_position = source_position
     @target_position = target_position
     @status = :active
+    @weapon = weapon
   end
   
   def update(dt)

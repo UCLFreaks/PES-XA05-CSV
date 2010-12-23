@@ -3,6 +3,10 @@
 
 require "./visualization/linear_movement.rb"
 require "./visualization/sprites/shot.rb"
+require "./visualization/sprites/tank_shot.rb"
+require "./visualization/weapons/weapon.rb"
+require "./visualization/weapons/tank_gun.rb"
+
 #Visual representation of unit
 class UnitSprite < BasicSprite
   attr_reader :state,:unit,:position,:weapon_hardpoint
@@ -57,9 +61,9 @@ class UnitSprite < BasicSprite
   def hit
     if(@unit.lives <= 0)
          @state = :dead
+         puts "#{@unit.object_id} dies as a sprite"
          @image = get_image(@unit, @team, @state)
     end
-         @v.busy_units.delete(self)    
   end
 
   #Adds the unit_sprite to the busy_units list of the encapsulating BattleVisualizer
@@ -68,12 +72,16 @@ class UnitSprite < BasicSprite
     @v.busy_units << (self)
   end
 
+  def make_idle
+    @v.busy_units.delete(self)
+  end
+
   def react_to_last_action
     if(@unit.last_action == :fire_hit)
       if (@unit.lives >0)
         wait_for(rand(1500),:shoot)
       else
-        shoot
+        @state = :shoot
       end
     end
     
@@ -120,15 +128,12 @@ class UnitSprite < BasicSprite
     end
     @last_sim_x = @unit.position
     @state = new_state
-    if( @shot != nil)
-      @shot.update(dt)
-      @shot = nil if @shot.status == :inactive
-    end
+    @weapon.update(dt) if @weapon.firing?
   end
 
 #Draws the unit to the designated surface
   def draw(to_surface)
-    @shot.draw(to_surface) if @shot != nil
+    @weapon.draw(to_surface) if @weapon.firing?
     @image.blit(to_surface,[@position[0]-sprite_size[0]/2,@position[1]])
   end
 
@@ -143,10 +148,10 @@ private
   end
 
   def shoot()
-      @v.busy_units.delete(self)
+      puts "Shooting at #{@unit.fired_at.object_id}"
       target_unit_sprite = @v.get_unit_sprite(@unit.fired_at)
-      target_unit_sprite.make_busy
-      @shot = Shot.new(self,target_unit_sprite)
+      @weapon.shoot(target_unit_sprite)
+      @v.busy_units.delete(self)
   end
 
   def get_image(unit,team,state)
@@ -194,7 +199,7 @@ private
 
   #Returns the relative weapon hardpoint coordinates for the right facing unit.
   def relative_weapon_hardpoint
-    return [0,0]
+    return [15,32]
   end
 
   #calculates the actual position of the hardpoint after scaling and rotation
