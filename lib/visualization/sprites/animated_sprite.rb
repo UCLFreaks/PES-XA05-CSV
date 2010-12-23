@@ -28,10 +28,10 @@ class AnimatedSprite < BasicSprite
 
   def add_animation(name,period,repeat = true,frames=number_of_frames)
     #frames = number_of_frames if frames == nil
-    puts "frames je: #{frames}"
+    #puts "frames je: #{frames}"
     @animations[name] = {"frames"=>frames,"period"=>period,"repeat"=>repeat,"y"=>@animations.count}
-    puts "adding animation"
-    p @animations[name]
+    #puts "adding animation"
+    #p @animations[name]
   end
 
   def set_animation(name)

@@ -8,7 +8,7 @@ require "./visualization/weapons/weapon.rb"
 require "./visualization/weapons/tank_gun.rb"
 
 #Visual representation of unit
-class UnitSprite < BasicSprite
+class UnitSprite < AnimatedSprite
   attr_reader :state,:unit,:position,:weapon_hardpoint
   include LinearMovement
 
@@ -56,13 +56,21 @@ class UnitSprite < BasicSprite
     @state_after_wait = nil
   end
 
+  def setup_animation
+    @number_of_frames = 8
+    add_animation(:dead, 500,false,1)
+    add_animation(:idle, 500,false,1)
+    add_animation(:run, 500)
+    set_animation(:run)
+  end
+
   #Informs the unit_sprite about hit by a shot. It checks whether the the unit
   #died and removes it from the busy_units list of the encapsulating BattleVisualizer.
   def hit
     if(@unit.lives <= 0)
          @state = :dead
          puts "#{@unit.object_id} dies as a sprite"
-         @image = get_image(@unit, @team, @state)
+         set_animation(:dead)
          make_idle
     end
   end
@@ -133,18 +141,21 @@ class UnitSprite < BasicSprite
     end
     @last_sim_x = @unit.position
     @state = new_state
+    super(dt)
     @weapon.update(dt) if @weapon.firing?
   end
 
 #Draws the unit to the designated surface
   def draw(to_surface)
     @weapon.draw(to_surface) if @weapon.firing?
-    @image.blit(to_surface,[@position[0]-sprite_size[0]/2,@position[1]-sprite_size[1]/2])
+    @image.blit(to_surface,
+      [(@position[0]-sprite_size[0]/2).round,
+        (@position[1]-sprite_size[1]/2).round],current_clip_rect)
     #Drawing bounding box for debuging
-    #lcp = left_corner_position
-    #to_surface.draw_box(
-    #  [lcp[0],lcp[1]],
-    #  [@position[0]+sprite_size[0]/2,@position[1]+sprite_size[1]/2], [255,255,0])
+    lcp = left_corner_position
+    to_surface.draw_box(
+      [lcp[0],lcp[1]],
+      [@position[0]+sprite_size[0]/2,@position[1]+sprite_size[1]/2], [255,255,0])
   end
 
   def left_corner_position
@@ -172,22 +183,11 @@ private
     if(team == :team1)
       team_suffix = "_r"
     else
-      team_suffix = "_b"
+      team_suffix = "_r"
     end
-    state_suffix = ""
-    case state
-    when :living
-      state_suffix = ""
-    when :dead
-      state_suffix = "_d"
-    else
-      state_suffix = ""
-    end
-
-
-    image = super(get_image_base_name(state)+team_suffix+state_suffix+'.png')
-    image = image.flip(true, false) if @direction == :left
-    image = image.zoom_to(sprite_size[0], sprite_size[1],true)
+    image = super(get_image_base_name(state)+team_suffix+'.png')
+    #image = image.flip(true, false) if @direction == :left
+    #image = image.zoom_to(sprite_size[0], sprite_size[1],true)
     return image
   end
 
@@ -239,7 +239,7 @@ private
   end
   
   def get_image_base_name(state)
-    return "soldier"
+    return "soldier_animation"
   end
 
   #Adds the unit to the busy_list and sets the _new_state_ after _miliseconds_ passed.

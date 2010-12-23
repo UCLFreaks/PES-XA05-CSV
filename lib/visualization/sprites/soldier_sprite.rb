@@ -3,6 +3,6 @@
 
 class SoldierSprite < UnitSprite
   def get_image_base_name(state)
-    return "soldier"
+    return "soldier_animation"
   end
 end
