@@ -10,4 +10,12 @@ class TankSprite < UnitSprite
   def sprite_size
     return [128,64]
   end
+
+  def image_original_size
+    return [128,64]
+  end
+
+  def relative_weapon_hardpoint
+    return [120,32]
+  end
 end

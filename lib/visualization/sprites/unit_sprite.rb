@@ -40,12 +40,12 @@ class UnitSprite < BasicSprite
     (@unit.position > 0)? @direction = :left : @direction = :right
     #Sprite image
     @image = get_image(unit, team,@state)
-    #Position as an [x,y] array
+    #Position as an [x,y] array. It corresponds to the center of the sprite
     @position = [@v.sim_to_vis_x(@unit.position),depth_to_y]
     #Last unit's simulation x
     @last_sim_x = unit.position
     #weapon hardpoint - point from which the shots originate
-    @weapon_hardpoint = [0,0]
+    @weapon_hardpoint = calculate_actual_weapon_hardpoint
     #unit weapon
     @weapon = default_weapon
     #DEPRECATED
@@ -63,6 +63,7 @@ class UnitSprite < BasicSprite
          @state = :dead
          puts "#{@unit.object_id} dies as a sprite"
          @image = get_image(@unit, @team, @state)
+         make_idle
     end
   end
 
@@ -72,6 +73,8 @@ class UnitSprite < BasicSprite
     @v.busy_units << (self)
   end
 
+  #removes the unit sprite from busy_units list of the encapsulating BattleVisualiser
+  #thus signalizing that this unit has all its actions this turn.
   def make_idle
     @v.busy_units.delete(self)
   end
@@ -101,12 +104,14 @@ class UnitSprite < BasicSprite
 # - _dt_ is number of miliseconds passed since last update call
   def update(dt)
     #@position = [@v.sim_to_vis_x(@unit.position),@position[1]]
-    if(@wait > 0)
-      @wait -= dt
-      if(@wait <= 0)
-        @state = @state_after_wait
-        @state_after_wait = nil
-        @wait = 0
+    if(@state != :dead)
+      if(@wait > 0)
+        @wait -= dt
+        if(@wait <= 0)
+          @state = @state_after_wait
+          @state_after_wait = nil
+          @wait = 0
+        end
       end
     end
     new_state = @state
@@ -134,7 +139,16 @@ class UnitSprite < BasicSprite
 #Draws the unit to the designated surface
   def draw(to_surface)
     @weapon.draw(to_surface) if @weapon.firing?
-    @image.blit(to_surface,[@position[0]-sprite_size[0]/2,@position[1]])
+    @image.blit(to_surface,[@position[0]-sprite_size[0]/2,@position[1]-sprite_size[1]/2])
+    #Drawing bounding box for debuging
+    #lcp = left_corner_position
+    #to_surface.draw_box(
+    #  [lcp[0],lcp[1]],
+    #  [@position[0]+sprite_size[0]/2,@position[1]+sprite_size[1]/2], [255,255,0])
+  end
+
+  def left_corner_position
+    return [@position[0]-sprite_size[0]/2,@position[1]-sprite_size[1]/2]
   end
 
 private
@@ -144,7 +158,7 @@ private
   end
 
   def depth_to_y
-    return @v.sky_height - sprite_size[1] +  - @depth * (@v.world_size[1]-@v.sky_height)/DEPTH_LEVELS
+    return @v.sky_height - sprite_size[1]/2 +  - @depth * (@v.world_size[1]-@v.sky_height)/DEPTH_LEVELS
   end
 
   def shoot()
@@ -182,6 +196,12 @@ private
     return [UNIT_X,UNIT_Y]
   end
 
+  #Returns the original size of the image.
+  #Used for calculating hardpoints.
+  def image_original_size
+    return [64,64]
+  end
+
   #Returns the maximal velocity of the unit
   def max_velocity
     return 40
@@ -197,19 +217,25 @@ private
     return TankGun.new(self)
   end
 
-  #Returns the relative weapon hardpoint coordinates for the right facing unit.
+  #Returns the relative weapon hardpoint coordinates counted from the top left corner for the right facing unit.
   def relative_weapon_hardpoint
-    return [15,32]
+    return [53,32]
+    #return [0,0]
   end
 
   #calculates the actual position of the hardpoint after scaling and rotation
   def calculate_actual_weapon_hardpoint
+    hc = relative_weapon_hardpoint
+    scale_factor = sprite_size[0]/image_original_size[0].to_f
+    #puts "Scale factor is: #{scale_factor}"
+    hc = [(hc[0]*scale_factor).round,(hc[1]*scale_factor).round]
     if(@direction == :left)
-      hc = relative_weapon_hardpoint
-      return [sprite_size[0] - hc[0],sprite_size[1] - hc[1]]
+      result =  [sprite_size[0] - hc[0],sprite_size[1] - hc[1]]
     else
-      return relative_weapon_hardpoint
+      result = hc
     end
+    #puts "Hardpoint calculation result: #{result}"
+    return result
   end
   
   def get_image_base_name(state)

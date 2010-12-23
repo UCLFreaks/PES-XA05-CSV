@@ -17,7 +17,7 @@ class Weapon
     @owner.make_busy
     @status = :active
     @actual_number_of_shots = min_number_of_shots + rand(max_number_of_shots-min_number_of_shots).floor
-    puts "Number of shots is #{@actual_number_of_shots}"
+    #puts "Number of shots is #{@actual_number_of_shots}"
     @time_since_last_shot = time_between_shots
   end
 
@@ -25,7 +25,7 @@ class Weapon
     @time_since_last_shot += dt
     if(@current_shots.size < @actual_number_of_shots)
       if(@time_since_last_shot >= time_between_shots)
-        puts "#{self.object_id} Spawning shot"
+        #puts "#{self.object_id} Spawning shot"
         shot = spawn_shot
         @current_shots << shot
         @all_shots << shot
@@ -91,9 +91,10 @@ class Weapon
   end
 
   def shot_source_position
+    lcp = @owner.left_corner_position
     return [
-      @owner.position[0]+@owner.weapon_hardpoint[0],
-      @owner.position[1]+@owner.weapon_hardpoint[1],
+      lcp[0]+@owner.weapon_hardpoint[0],
+      lcp[1]+@owner.weapon_hardpoint[1],
     ]
   end
 

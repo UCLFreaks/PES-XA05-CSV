@@ -22,6 +22,8 @@ class BattleVisualizer
     create_sprites_for_units(@battle.army1.units,:team1)
     create_sprites_for_units(@battle.army2.units,:team2)
     @unit_sprites.sort_sprites
+    @report_busy_after = 30000
+    @time_since_last_report = 0
   end
 
   def create_sprites_for_units(units,team)
@@ -60,10 +62,18 @@ class BattleVisualizer
 
   def update(dt)
     @unit_sprites.update(dt)
+    @time_since_last_report += dt
+    if(@time_since_last_report >= @report_busy_after)
+      @time_since_last_report -= @report_busy_after
+      puts "Busy units:"
+      @busy_units.each do |sprite|
+        puts "#{sprite.unit.class} (#{sprite.unit.object_id} #{sprite.unit.last_action})"
+      end
+    end
   end
 
   def draw(to_surface)
-    #@axis.draw(to_surface)
+    @axis.draw(to_surface)
     @unit_sprites.draw(to_surface)
   end
   

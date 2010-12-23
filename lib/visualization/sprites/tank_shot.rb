@@ -4,7 +4,7 @@ class TankShot < Shot
     super(weapon,source_position,target_position)
     @ttl = 400
     @time = 0
-    puts "Tank shot spawned"
+    #puts "Tank shot spawned"
   end
   
   def update(dt)

@@ -7,7 +7,7 @@ class BattleStepper
     @battle = battle
     @step_after = step_after
     @current_time = 0
-    @step = 0
+    @step = 1
   end
 
   def update(time_elapsed)
