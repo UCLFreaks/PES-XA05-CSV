@@ -4,7 +4,6 @@
 class Status < AnimatedSprite
   def initialize
     @position = [0,0]
-    @image =  get_image("status_animation.png")
     super()
   end
 
@@ -14,6 +13,10 @@ class Status < AnimatedSprite
     add_animation(:run, 500)
     set_animation(:run)
     
+  end
+
+  def get_spritesheet
+    return get_image("status_animation.png")
   end
 
 end

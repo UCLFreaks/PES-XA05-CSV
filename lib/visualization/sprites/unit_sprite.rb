@@ -25,21 +25,22 @@ class UnitSprite < AnimatedSprite
   # - team can be :team1 (blue) or :team2 (red)
   # - visualizer the encapsulating BattleVisualizer
   def initialize(unit,team,vizualizer)
-    super()
     #Encapsulating visualizer
     @v = vizualizer
     #Coresponding unit to the sprite
     @unit = unit
     #Team of the sprite
     @team = team
+    #Sets up the @image surface of the animated sprite
+    super()
     #Depth level
     @depth = -rand(DEPTH_LEVELS)
     #Current state of the unit. (starting state is :living)
     @state = :living
     #Unit facing direction
     (@unit.position > 0)? @direction = :left : @direction = :right
-    #Sprite image
-    @image = get_image(unit, team,@state)
+    #retuns the rotated first frame of the animation according to @direction
+    @image = @image.flip(true, false) if @direction == :left
     #Position as an [x,y] array. It corresponds to the center of the sprite
     @position = [@v.sim_to_vis_x(@unit.position),depth_to_y]
     #Last unit's simulation x
@@ -56,22 +57,28 @@ class UnitSprite < AnimatedSprite
     @state_after_wait = nil
   end
 
+  def get_spritesheet
+    return get_image(@unit, @team)
+  end
+
   def setup_animation
     @number_of_frames = 8
-    add_animation(:dead, 500,false,1)
-    add_animation(:idle, 500,false,1)
+    add_animation(:dead, 750,false,8)
+    add_animation(:idle, 1000,false,1)
     add_animation(:run, 500)
-    set_animation(:run)
+    set_animation(:idle)
   end
 
   #Informs the unit_sprite about hit by a shot. It checks whether the the unit
   #died and removes it from the busy_units list of the encapsulating BattleVisualizer.
   def hit
     if(@unit.lives <= 0)
-         @state = :dead
-         puts "#{@unit.object_id} dies as a sprite"
-         set_animation(:dead)
-         make_idle
+         if(@state != :dead)
+           @state = :dead
+           puts "#{@unit.object_id} dies as a sprite"
+           set_animation(:dead)
+           make_idle
+         end
     end
   end
 
@@ -99,7 +106,7 @@ class UnitSprite < AnimatedSprite
     if([:move,:retrat,:crawl].include?(@unit.last_action) and @state == :living)
       #@state = :moving
       wait_for(rand(1500),:moving)
-      puts "#{self.class} is moving"
+      #puts "#{self.class} is moving"
       @destination = @v.sim_to_vis_x(@unit.position)
       distance =   @destination - @position[0]
       current_velocity = max_velocity-min_velocity + rand(max_velocity-min_velocity)
@@ -129,33 +136,35 @@ class UnitSprite < AnimatedSprite
     end
     
     if(@state == :moving)
+      set_animation(:run) if current_animation['name'] != :run
       x_position_before = @position[0]
       move(dt)
       if((x_position_before-@destination).abs < (@position[0] - @destination).abs or @destination.round == @position[0].round)
         new_state = :living
         @position = [@destination,@position[1]]
         @destination = nil
+        set_animation(:idle)
         @v.busy_units.delete(self)
         
       end
     end
     @last_sim_x = @unit.position
-    @state = new_state
-    super(dt)
+    @state = new_state 
     @weapon.update(dt) if @weapon.firing?
+    super(dt)
   end
 
 #Draws the unit to the designated surface
   def draw(to_surface)
     @weapon.draw(to_surface) if @weapon.firing?
-    @image.blit(to_surface,
-      [(@position[0]-sprite_size[0]/2).round,
-        (@position[1]-sprite_size[1]/2).round],current_clip_rect)
+    @image = get_current_frame_image
+    @image.blit(to_surface,[(@position[0]-sprite_size[0]/2).round,
+        (@position[1]-sprite_size[1]/2).round])
     #Drawing bounding box for debuging
-    lcp = left_corner_position
-    to_surface.draw_box(
-      [lcp[0],lcp[1]],
-      [@position[0]+sprite_size[0]/2,@position[1]+sprite_size[1]/2], [255,255,0])
+#    lcp = left_corner_position
+#    to_surface.draw_box(
+#      [lcp[0],lcp[1]],
+#      [@position[0]+sprite_size[0]/2,@position[1]+sprite_size[1]/2], [255,255,0])
   end
 
   def left_corner_position
@@ -163,6 +172,13 @@ class UnitSprite < AnimatedSprite
   end
 
 private
+
+  def get_current_frame_image
+    should_rdrw = should_redraw?
+    super
+    @image = @image.flip(true, false) if should_rdrw and @direction == :left
+    return @image
+  end
 
   def should_move?
     return true if @destination != nil
@@ -173,19 +189,19 @@ private
   end
 
   def shoot()
-      puts "Shooting at #{@unit.fired_at.object_id}"
+      #puts "Shooting at #{@unit.fired_at.object_id}"
       target_unit_sprite = @v.get_unit_sprite(@unit.fired_at)
       @weapon.shoot(target_unit_sprite)
       @v.busy_units.delete(self)
   end
 
-  def get_image(unit,team,state)
+  def get_image(unit,team)
     if(team == :team1)
       team_suffix = "_r"
     else
-      team_suffix = "_r"
+      team_suffix = "_b"
     end
-    image = super(get_image_base_name(state)+team_suffix+'.png')
+    image = super(get_image_base_name()+team_suffix+'.png')
     #image = image.flip(true, false) if @direction == :left
     #image = image.zoom_to(sprite_size[0], sprite_size[1],true)
     return image
@@ -238,7 +254,7 @@ private
     return result
   end
   
-  def get_image_base_name(state)
+  def get_image_base_name()
     return "soldier_animation"
   end
 

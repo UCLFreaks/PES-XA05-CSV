@@ -44,6 +44,7 @@ class BasicSprite
 
   def get_image(img_name)
     img =  Rubygame::Surface.load("./visualization/img/" + img_name)
+    return img
   end
   
 

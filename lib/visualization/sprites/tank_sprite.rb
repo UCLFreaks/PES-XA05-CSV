@@ -7,6 +7,11 @@ class TankSprite < UnitSprite
     return "tank"
   end
 
+  def setup_animation
+    add_animation(:idle, 500,false,1)
+  end
+  
+
   def sprite_size
     return [128,64]
   end

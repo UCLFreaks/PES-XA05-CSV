@@ -73,7 +73,7 @@ class BattleVisualizer
   end
 
   def draw(to_surface)
-    @axis.draw(to_surface)
+    #@axis.draw(to_surface)
     @unit_sprites.draw(to_surface)
   end
   

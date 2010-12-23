@@ -10,7 +10,6 @@ require "./visualization/sprites/sprite_group.rb"
 require "./visualization/sprites/basic_sprite.rb"
 require "./visualization/sprites/animated_sprite.rb"
 require "./visualization/sprites/status.rb"
-require "./visualization/sprites/animated_soldier_test.rb"
 
 require "./visualization/battle_stepper.rb"
 require "./visualization/battle_visualizer.rb"
@@ -24,11 +23,12 @@ class Visualization
     maximum_resolution = Rubygame::Screen.get_resolution
     @resolution = [maximum_resolution[0] - 60, 200]
     puts "This display can manage at least " + maximum_resolution.join("x")
+    @screen = Rubygame::Screen.new [@resolution[0], @resolution[1]], 0, [Rubygame::HWSURFACE, Rubygame::DOUBLEBUF]
+		@screen.title = "PES XA05 VISUALIZATION!"
+
     @sky_height = @resolution[1]/2
     @sky = Sky.new(@resolution[0],sky_height)
     @battle_visualizer = BattleVisualizer.new(battle,@resolution,@sky_height)
-    @screen = Rubygame::Screen.new [@resolution[0], @resolution[1]], 0, [Rubygame::HWSURFACE, Rubygame::DOUBLEBUF]
-		@screen.title = "PES XA05 VISUALIZATION!"
 
 		@queue = Rubygame::EventQueue.new
 		@clock = Rubygame::Clock.new
@@ -38,7 +38,6 @@ class Visualization
     
     @background = Background.new(@resolution,@sky_height)
     @status  = Status.new
-    @animated_soldier_test = AnimatedSoldierTest.new
 
 
 	end
@@ -71,7 +70,6 @@ class Visualization
     @sky.update(td)
     @battle_visualizer.update(td)
     @status.update(td)
-    @animated_soldier_test.update(td)
 	end
 
 	def draw
@@ -79,7 +77,6 @@ class Visualization
     @sky.draw(@screen)
     @battle_visualizer.draw(@screen)
     @status.draw(@screen)
-    @animated_soldier_test.draw(@screen)
     @screen.flip
     
 	end
