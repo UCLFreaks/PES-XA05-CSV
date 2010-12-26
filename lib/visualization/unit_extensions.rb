@@ -40,15 +40,16 @@ class Elite
 end
 
 class Sniper
+  attr_reader :max_focus_time
   include UnitReportMethods
   def crawl
     @last_action = :crawl
-    super()
+    @position += attack_direction
   end
 
   def prepare_weapon
     @last_action = :prepare_weapon
-    super()
+    @focus_time -= 1
   end
 
 end

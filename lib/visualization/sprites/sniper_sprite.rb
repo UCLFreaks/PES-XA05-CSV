@@ -18,4 +18,11 @@ class SniperSprite < UnitSprite
     return [62,32]
   end
 
+  def react_to_last_action(last_action)
+    if(last_action == :prepare_weapon)
+      set_animation(:idle,@unit.max_focus_time+1-[@unit.focus_time,3].max)
+    end
+    super(last_action)
+  end
+
 end

@@ -97,26 +97,11 @@ class UnitSprite < AnimatedSprite
     @busy_reason = ""
   end
 
-  def react_to_last_action
-    if(@unit.last_action == :fire_hit)
-      if (@unit.lives >0)
-        wait_for(rand(1500),:shoot)
-      else
-        @state = :shoot
-      end
-    end
-    
-    if([:move,:retrat,:crawl].include?(@unit.last_action) and @state == :living)
-      #@state = :moving
-      wait_for(rand(1500),:moving)
-      #puts "#{self.class} is moving"
-      @destination = @v.sim_to_vis_x(@unit.position)
-      distance =   @destination - @position[0]
-      current_velocity = max_velocity-min_velocity + rand(max_velocity-min_velocity)
-      (distance > 0)? @velocity = [current_velocity,0]:@velocity = [-current_velocity,0]
-      make_busy("Moving in progress")
-    end
+  def last_action_changed
+    react_to_last_action(@unit.last_action)
   end
+
+
 
 #Updates the state of the UnitSprite according to current @state of it.
 # - _dt_ is number of miliseconds passed since last update call
@@ -175,6 +160,27 @@ class UnitSprite < AnimatedSprite
   end
 
 private
+
+  def react_to_last_action(last_action)
+    if(last_action == :fire_hit)
+      if (@unit.lives >0)
+        wait_for(rand(1500),:shoot)
+      else
+        @state = :shoot
+      end
+    end
+
+    if([:move,:retrat,:crawl].include?(last_action) and @state == :living)
+      #@state = :moving
+      wait_for(rand(1500),:moving)
+      #puts "#{self.class} is moving"
+      @destination = @v.sim_to_vis_x(@unit.position)
+      distance =   @destination - @position[0]
+      current_velocity = max_velocity-min_velocity + rand(max_velocity-min_velocity)
+      (distance > 0)? @velocity = [current_velocity,0]:@velocity = [-current_velocity,0]
+      make_busy("Moving in progress")
+    end
+  end
 
   def get_current_frame_image
     should_rdrw = should_redraw?

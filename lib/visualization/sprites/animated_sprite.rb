@@ -13,6 +13,7 @@ class AnimatedSprite < BasicSprite
     @image = Rubygame::Surface.new(frame_size,@spritesheet.depth,@spritesheet.flags)
     @image = @image.to_display_alpha
     @should_redraw = true
+    @final_frame = nil
     @image = get_current_frame_image
     
   end
@@ -58,10 +59,15 @@ class AnimatedSprite < BasicSprite
     return @should_redraw
   end
 
-  def set_animation(name)
+  def set_animation(name,current_frame=1)
     @current_animation = @animations[name]
     @current_animation['frame_length'] = @current_animation['period']/@current_animation['frames']
-    @current_animation['frame'] = 1
+    @current_animation['frame'] = current_frame
+    if(current_frame > 1)
+      @final_frame = current_frame
+    else
+      @final_frame = @current_animation['frames']
+    end  
     @should_redraw = true
   end
 
@@ -91,7 +97,7 @@ class AnimatedSprite < BasicSprite
 
   def final_frame?
     if(@current_animation['repeat'] == false)
-      return true if(@current_animation['frame'] == @current_animation['frames'])
+      return true if(@current_animation['frame'] == @final_frame)
     end
     return false
   end

@@ -64,7 +64,7 @@ class Visualization
       #puts "Animation step finished"
       result = @battle_stepper.update(td)
       if(result == :step_made)
-        @battle_visualizer.unit_sprites.each{|sprite| sprite.react_to_last_action}
+        @battle_visualizer.unit_sprites.each{|sprite| sprite.last_action_changed}
       end
     end
     @sky.update(td)
