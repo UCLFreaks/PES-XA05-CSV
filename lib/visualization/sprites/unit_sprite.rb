@@ -270,9 +270,14 @@ private
   #Adds the unit to the busy_list and sets the _new_state_ after _miliseconds_ passed.
   # Important! You have to remove the unit from busy_list yourself!
   def wait_for(miliseconds,new_state)
-    @wait = miliseconds
-    @state_after_wait = new_state
-    make_busy("Waiting for #{miliseconds} to switch to #{new_state}")
-  end
+    if(miliseconds > 0)
+      @wait = miliseconds
+      @state_after_wait = new_state
+      make_busy("Waiting for #{miliseconds} to switch to #{new_state}")
+    else
+      @state = new_state
+      @state_after_wait = nil
+    end
+ end
 
 end
