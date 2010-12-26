@@ -9,7 +9,7 @@ require "./visualization/weapons/tank_gun.rb"
 
 #Visual representation of unit
 class UnitSprite < AnimatedSprite
-  attr_reader :state,:unit,:position,:weapon_hardpoint
+  attr_reader :state,:unit,:position,:weapon_hardpoint, :busy_reason
   include LinearMovement
 
   #Number of y lines that units are placed onto.
@@ -55,6 +55,7 @@ class UnitSprite < AnimatedSprite
     @wait = 0
     #Which state should be set after waiting.
     @state_after_wait = nil
+    @busy_reason = ""
   end
 
   def get_spritesheet
@@ -84,14 +85,16 @@ class UnitSprite < AnimatedSprite
 
   #Adds the unit_sprite to the busy_units list of the encapsulating BattleVisualizer
   #thus signalizing that this unit didn't finished yet its action this turn.
-  def make_busy
+  def make_busy(busy_reason)
     @v.busy_units << (self)
+    @busy_reason = busy_reason
   end
 
   #removes the unit sprite from busy_units list of the encapsulating BattleVisualiser
   #thus signalizing that this unit has all its actions this turn.
   def make_idle
     @v.busy_units.delete(self)
+    @busy_reason = ""
   end
 
   def react_to_last_action
@@ -111,7 +114,7 @@ class UnitSprite < AnimatedSprite
       distance =   @destination - @position[0]
       current_velocity = max_velocity-min_velocity + rand(max_velocity-min_velocity)
       (distance > 0)? @velocity = [current_velocity,0]:@velocity = [-current_velocity,0]
-      @v.busy_units.add(self)
+      make_busy("Moving in progress")
     end
   end
 
@@ -263,7 +266,7 @@ private
   def wait_for(miliseconds,new_state)
     @wait = miliseconds
     @state_after_wait = new_state
-    make_busy
+    make_busy("Waiting for #{miliseconds} to switch to #{new_state}")
   end
 
 end

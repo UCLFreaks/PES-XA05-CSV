@@ -14,7 +14,7 @@ class Weapon
   def shoot(target)
     @current_shots.clear
     @target = target
-    @owner.make_busy
+    @owner.make_busy("Shooting at #{@target.unit.object_id}")
     @status = :active
     @actual_number_of_shots = min_number_of_shots + rand(max_number_of_shots-min_number_of_shots).floor
     #puts "Number of shots is #{@actual_number_of_shots}"
