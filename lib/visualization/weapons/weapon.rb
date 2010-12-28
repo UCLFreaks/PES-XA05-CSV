@@ -2,14 +2,18 @@
 # and open the template in the editor.
 
 class Weapon
+  attr_reader :target
   def initialize(owner)
-    @current_shots = SpriteGroup.new
-    @all_shots = SpriteGroup.new
+    @current_shots = []
+    @all_shots = []
     @owner = owner
     @target = nil
     @status = :inactive
     @actual_number_of_shots = nil
+    @sounds = {}
+    load_sounds
   end
+
 
   def shoot(target)
     @current_shots.clear
@@ -32,14 +36,18 @@ class Weapon
         @time_since_last_shot -= time_between_shots
       end
     end
-    @all_shots.update(dt)
+    @all_shots.each do |shot|
+      shot.update(dt)
+    end
     check_shots_state
     check_weapon_state
   end
 
   def draw(to_surface)
     #puts "Drawing shots"
-    @all_shots.draw(to_surface)
+    @all_shots.each do |shot|
+      shot.draw(to_surface)
+    end
   end
 
   def firing?
@@ -54,25 +62,32 @@ class Weapon
   private
 
   def check_shots_state
-    to_be_deleted = []
     @all_shots.each do |shot|
       if not (shot.flying?)
-        to_be_deleted << shot
+        @current_shots.delete(shot)
+        @all_shots.delete(shot)
+        #puts "Deleting shot #{shot.object_id}"
       end
     end
-    @current_shots.delete(to_be_deleted)
-    @all_shots.delete(to_be_deleted)
   end
 
   def check_weapon_state
     if not(@current_shots.empty?)
       @status = :active
     else
+      shooting_finished
+      puts "Weapon incactive"
       @status = :inactive
     end
   end
 
+  def shooting_finished
+    
+  end
 
+  def load_sounds
+    
+  end
 
   def spawn_shot
     raise "must be implemented for #{self.class}"

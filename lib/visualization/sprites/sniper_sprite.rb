@@ -14,6 +14,10 @@ class SniperSprite < UnitSprite
     set_animation(:idle)
   end
 
+  def default_weapon
+    return TankGun.new(self)
+  end
+
   def relative_weapon_hardpoint
     return [62,32]
   end

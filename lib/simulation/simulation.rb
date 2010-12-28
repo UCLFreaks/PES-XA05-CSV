@@ -40,15 +40,18 @@ class SimulationStrategy
 			}
 
 		army1.units.select{|unit| unit.alive? }.each { |unit|
-
-			unit.enemy = nearest
-			if(unit.enemy_distance > unit.range)
-				puts unit.name + ' v ' + unit.class.to_s + ' se hejbe '
-				unit.move
-			else
-				puts unit.name + " (#{unit.object_id}) shoots at  #{unit.enemy.name} (#{unit.enemy.object_id}) " if unit.enemy != nil
-				unit.fire
-			end	
+      if(unit.class == Sniper)
+        unit.prepare_weapon
+      else
+        unit.enemy = nearest
+        if(unit.enemy_distance > unit.range)
+          puts unit.name + ' v ' + unit.class.to_s + ' se hejbe '
+          unit.move
+        else
+          puts unit.name + " (#{unit.object_id}) shoots at  #{unit.enemy.name} (#{unit.enemy.object_id}) " if unit.enemy != nil
+          unit.fire
+        end
+      end
 		}
 
 

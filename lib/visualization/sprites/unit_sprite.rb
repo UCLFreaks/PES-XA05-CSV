@@ -6,6 +6,9 @@ require "./visualization/sprites/shot.rb"
 require "./visualization/sprites/tank_shot.rb"
 require "./visualization/weapons/weapon.rb"
 require "./visualization/weapons/tank_gun.rb"
+require "./visualization/weapons/sniper_rifle.rb"
+require "./visualization/weapons/machine_gun.rb"
+require "./visualization/sprites/rifle_shot.rb"
 
 #Visual representation of unit
 class UnitSprite < AnimatedSprite
@@ -62,6 +65,12 @@ class UnitSprite < AnimatedSprite
     return get_image(@unit, @team)
   end
 
+  def col_rect
+    lcp = left_corner_position
+    ss = sprite_size
+    return [lcp[0]+10,lcp[1],ss[0]-10,ss[1]]
+  end
+
   def setup_animation
     @number_of_frames = 8
     add_animation(:dead, 750,false,8)
@@ -78,6 +87,7 @@ class UnitSprite < AnimatedSprite
            @state = :dead
            puts "#{@unit.object_id} dies as a sprite"
            set_animation(:dead)
+           [@sounds['die3'],@sounds['die2']].sample.play
            make_idle
          end
     end
@@ -124,7 +134,7 @@ class UnitSprite < AnimatedSprite
     end
     
     if(@state == :moving)
-      set_animation(:run) if current_animation['name'] != :run
+      set_animation(:run) if current_animation['name'] != :run and @unit.last_action != :crawl
       x_position_before = @position[0]
       move(dt)
       if((x_position_before-@destination).abs < (@position[0] - @destination).abs or @destination.round == @position[0].round)
@@ -161,10 +171,20 @@ class UnitSprite < AnimatedSprite
 
 private
 
+  def load_sounds
+    @sounds['die2'] = AudioManager.get_sound('soldier_die2.wav')
+    @sounds['die3'] = AudioManager.get_sound('soldier_die3.wav')
+  end
+
   def react_to_last_action(last_action)
     if(last_action == :fire_hit)
       if (@unit.lives >0)
-        wait_for(rand(1500),:shoot)
+        if(@v.busy_units.select{|unit| unit.busy_reason == :moving}.count > 0)
+          max_waiting_time = 8000
+        else
+          max_waiting_time = 1500
+        end
+        wait_for(rand(max_waiting_time),:shoot)
       else
         @state = :shoot
       end
@@ -178,7 +198,7 @@ private
       distance =   @destination - @position[0]
       current_velocity = max_velocity-min_velocity + rand(max_velocity-min_velocity)
       (distance > 0)? @velocity = [current_velocity,0]:@velocity = [-current_velocity,0]
-      make_busy("Moving in progress")
+      make_busy(:moving)
     end
   end
 
@@ -201,7 +221,6 @@ private
       #puts "Shooting at #{@unit.fired_at.object_id}"
       target_unit_sprite = @v.get_unit_sprite(@unit.fired_at)
       @weapon.shoot(target_unit_sprite)
-      @v.busy_units.delete(self)
   end
 
   def get_image(unit,team)
@@ -239,7 +258,7 @@ private
 
   #Returns default weapon of the unit
   def default_weapon
-    return TankGun.new(self)
+    return MachineGun.new(self)
   end
 
   #Returns the relative weapon hardpoint coordinates counted from the top left corner for the right facing unit.

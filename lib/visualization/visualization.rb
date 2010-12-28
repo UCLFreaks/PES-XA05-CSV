@@ -4,8 +4,10 @@
 require "rubygems"
 require "rubygame"
 module Visualization
+require "./visualization/vector.rb"
 require "./visualization/background.rb"
 require "./visualization/sky.rb"
+require "./visualization/audio_manager.rb"
 require "./visualization/sprites/sprite_group.rb"
 require "./visualization/sprites/basic_sprite.rb"
 require "./visualization/sprites/animated_sprite.rb"
@@ -16,19 +18,22 @@ require "./visualization/battle_visualizer.rb"
 
 class Visualization
   attr_reader :sky_height
-	def initialize(battle)
+	def Visualization.get_resolution
+    return @@resulotion
+  end
+  def initialize(battle)
     @battle_stepper = BattleStepper.new(battle,100)
 
 		Rubygame.init
     maximum_resolution = Rubygame::Screen.get_resolution
-    @resolution = [maximum_resolution[0] - 60, 200]
+    @@resolution = [maximum_resolution[0] - 60, 200]
     puts "This display can manage at least " + maximum_resolution.join("x")
-    @screen = Rubygame::Screen.new [@resolution[0], @resolution[1]], 0, [Rubygame::HWSURFACE, Rubygame::DOUBLEBUF]
+    @screen = Rubygame::Screen.new [@@resolution[0], @@resolution[1]], 0, [Rubygame::HWSURFACE, Rubygame::DOUBLEBUF]
 		@screen.title = "PES XA05 VISUALIZATION!"
 
-    @sky_height = @resolution[1]/2
-    @sky = Sky.new(@resolution[0],sky_height)
-    @battle_visualizer = BattleVisualizer.new(battle,@resolution,@sky_height)
+    @sky_height = @@resolution[1]/2
+    @sky = Sky.new(@@resolution[0],sky_height)
+    @battle_visualizer = BattleVisualizer.new(battle,@@resolution,@sky_height)
 
 		@queue = Rubygame::EventQueue.new
 		@clock = Rubygame::Clock.new
@@ -36,7 +41,7 @@ class Visualization
     @clock.calibrate
     @clock.enable_tick_events
     
-    @background = Background.new(@resolution,@sky_height)
+    @background = Background.new(@@resolution,@sky_height)
     @status  = Status.new
 
 

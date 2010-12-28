@@ -8,7 +8,7 @@ def create_units(dir)
 
 
   unit_weights = {
-    "Soldier" => 50,
+    "Soldier" => 2,
     "Captain" => 0,
     "Elite" => 0,
     "Sniper" => 0,

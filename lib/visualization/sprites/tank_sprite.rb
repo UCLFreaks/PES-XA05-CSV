@@ -27,4 +27,9 @@ class TankSprite < UnitSprite
   def relative_weapon_hardpoint
     return [120,32]
   end
+
+  def default_weapon
+    return TankGun.new(self)
+  end
+
 end

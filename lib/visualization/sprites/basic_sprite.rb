@@ -7,12 +7,21 @@ class BasicSprite
     @groups = []
     @velocity = [0.0,0.0] #Velocity vector is in pixels per second
     @position = [0.0,0.0]
+    @sounds = {}
+    load_sounds
   end
+
+
 
   #Draws the sprite to the surface.
   # []
   def draw(to_surface)
     @image.blit(to_surface,[@position[0].round,@position[1].round])
+  end
+
+  #Loads sounds of the sprite
+  def load_sounds
+
   end
 
   def velocity
@@ -48,7 +57,7 @@ class BasicSprite
   end
   
 
-  def exectue_movement(dt)
+  def execute_movement(dt)
     raise "Execute movement is not implemented for #{self.class}"
   end
 
