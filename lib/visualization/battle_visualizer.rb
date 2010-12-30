@@ -22,7 +22,7 @@ class BattleVisualizer
     create_sprites_for_units(@battle.army1.units,:team1)
     create_sprites_for_units(@battle.army2.units,:team2)
     @unit_sprites.sort_sprites
-    @report_busy_after = 3000
+    @report_busy_after = 30000
     @time_since_last_report = 0
   end
 

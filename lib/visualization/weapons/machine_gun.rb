@@ -2,6 +2,7 @@
 # and open the template in the editor.
 
 class MachineGun < Weapon
+  attr_reader :hit_delivered
   def initialize(owner)
     super(owner)
     @hit_delivered = false
@@ -9,11 +10,12 @@ class MachineGun < Weapon
 
   def spawn_shot
     y_offset = @target.position[1] + rand(64) - 32
+    hitting = true if @shots_fired == 0
     @sounds['fire'].play
     return RifleShot.new(self,
       shot_source_position,
       [@target.position[0],y_offset],
-      @target)
+      @target,hitting)
   end
 
   def min_number_of_shots

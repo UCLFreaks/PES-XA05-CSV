@@ -68,6 +68,9 @@ class UnitSprite < AnimatedSprite
   def col_rect
     lcp = left_corner_position
     ss = sprite_size
+    if(@state == :dead)
+      return [lcp[0]+10,lcp[1]+40,ss[0]-10,ss[1]-40]
+    end
     return [lcp[0]+10,lcp[1],ss[0]-10,ss[1]]
   end
 
@@ -141,7 +144,7 @@ class UnitSprite < AnimatedSprite
         new_state = :living
         @position = [@destination,@position[1]]
         @destination = nil
-        set_animation(:idle)
+        set_animation(:idle) if @unit.last_action != :crawl
         @v.busy_units.delete(self)
         
       end

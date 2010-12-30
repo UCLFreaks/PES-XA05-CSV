@@ -19,7 +19,7 @@ require "./visualization/battle_visualizer.rb"
 class Visualization
   attr_reader :sky_height
 	def Visualization.get_resolution
-    return @@resulotion
+    return @@resolution
   end
   def initialize(battle)
     @battle_stepper = BattleStepper.new(battle,100)

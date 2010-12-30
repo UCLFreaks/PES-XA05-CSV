@@ -60,6 +60,7 @@ class Weapon
   def hit_target
     @target.hit
     @owner.make_idle
+    puts "#{@owner.object_id} Hitting target"
   end
 
   private

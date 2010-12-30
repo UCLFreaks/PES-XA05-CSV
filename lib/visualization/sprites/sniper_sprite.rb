@@ -19,7 +19,7 @@ class SniperSprite < UnitSprite
   end
 
   def relative_weapon_hardpoint
-    return [62,32]
+    return [62,37]
   end
 
   def react_to_last_action(last_action)
