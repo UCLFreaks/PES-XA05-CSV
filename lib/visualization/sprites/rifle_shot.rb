@@ -8,7 +8,7 @@ class RifleShot < Shot
     @position = source_position
     @velocity = Vector.from_points(source_position, target_position)
     @velocity.normalize!
-    @velocity = [@velocity[0]*200,@velocity[1]*200]
+    @velocity = [@velocity[0]*300,@velocity[1]*300]
     @hitting = hitting
     @target = target
     @col_rect = Rubygame::Rect.new(@position[0],@position[1],4,4)
@@ -39,5 +39,7 @@ class RifleShot < Shot
   def draw(to_surface)
     to_surface.draw_circle_s(@position, 2, [255,255,0]) if(@status == :active)
   end
+
+
 
 end

@@ -10,6 +10,7 @@ class Weapon
     @target = nil
     @status = :inactive
     @actual_number_of_shots = nil
+    @shots_fired = 0
     @sounds = {}
     load_sounds
   end
@@ -17,22 +18,24 @@ class Weapon
 
   def shoot(target)
     @current_shots.clear
+    @shots_fired = 0
     @target = target
     @owner.make_busy("Shooting at #{@target.unit.object_id}")
     @status = :active
-    @actual_number_of_shots = min_number_of_shots + rand(max_number_of_shots-min_number_of_shots).floor
+    @actual_number_of_shots = min_number_of_shots + rand(max_number_of_shots-min_number_of_shots+1).floor
     #puts "Number of shots is #{@actual_number_of_shots}"
     @time_since_last_shot = time_between_shots
   end
 
   def update(dt)
     @time_since_last_shot += dt
-    if(@current_shots.size < @actual_number_of_shots)
+    if(@shots_fired < @actual_number_of_shots)
       if(@time_since_last_shot >= time_between_shots)
         #puts "#{self.object_id} Spawning shot"
         shot = spawn_shot
         @current_shots << shot
         @all_shots << shot
+        @shots_fired += 1
         @time_since_last_shot -= time_between_shots
       end
     end

@@ -8,7 +8,12 @@ class MachineGun < Weapon
   end
 
   def spawn_shot
-    return RifleShot.new(self,shot_source_position,@target.position,@target)
+    y_offset = @target.position[1] + rand(64) - 32
+    @sounds['fire'].play
+    return RifleShot.new(self,
+      shot_source_position,
+      [@target.position[0],y_offset],
+      @target)
   end
 
   def min_number_of_shots
@@ -38,5 +43,10 @@ class MachineGun < Weapon
     @hit_delivered = false
   end
 
+  private
+
+  def load_sounds
+    @sounds['fire'] = AudioManager.get_sound("soldier_fire2.wav")
+  end
 
 end
