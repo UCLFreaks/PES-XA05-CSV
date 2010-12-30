@@ -4,6 +4,7 @@
 class TankGun < Weapon
   def shoot(target)
     super(target)
+
     @sounds['fire'].play
     hit_target
   end

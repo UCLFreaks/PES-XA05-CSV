@@ -44,6 +44,9 @@ class Visualization
     @background = Background.new(@@resolution,@sky_height)
     @status  = Status.new
 
+    music = AudioManager.get_music("ambience.mp3")
+    music.volume = 0.34
+    music.play
 
 	end
  

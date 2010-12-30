@@ -45,12 +45,10 @@ class RifleShot < Shot
   end
 
   def draw(to_surface)
-    if(@weapon.hit_delivered)
-      color = [255,0,0]
-    else
-      color = [255,255,0]
+    if(@status == :active)
+      to_surface.draw_circle_s(@position, 2, [255,255,0])
+      to_surface.draw_circle_s(@position, 1, [255,0,0])
     end
-    to_surface.draw_circle_s(@position, 2, color) if(@status == :active)
   end
 
 

@@ -27,9 +27,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.63"
-     inkscape:cx="131.46255"
-     inkscape:cy="32"
+     inkscape:zoom="1.815"
+     inkscape:cx="130.64015"
+     inkscape:cy="48.996999"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:document-units="px"
@@ -113,5 +113,6 @@
   <g
      id="layer1"
      inkscape:label="Layer 1"
-     inkscape:groupmode="layer" />
+     inkscape:groupmode="layer"
+     style="display:inline" />
 </svg>

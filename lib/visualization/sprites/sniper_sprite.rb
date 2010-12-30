@@ -15,7 +15,7 @@ class SniperSprite < UnitSprite
   end
 
   def default_weapon
-    return TankGun.new(self)
+    return SniperRifle.new(self)
   end
 
   def relative_weapon_hardpoint
