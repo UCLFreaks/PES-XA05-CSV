@@ -22,6 +22,7 @@ class BattleStepper
         @battle.army1.units.each {|unit| unit.clear_last_action}
         @battle.army2.units.each {|unit| unit.clear_last_action}
 				@battle.make_step
+        @battle.info
 				@step += 1
         return :step_made
 			end

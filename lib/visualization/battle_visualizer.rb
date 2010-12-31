@@ -71,10 +71,11 @@ class BattleVisualizer
     @time_since_last_report += dt
     if(@time_since_last_report >= @report_busy_after)
       @time_since_last_report -= @report_busy_after
-      puts "Busy units:"
-      @busy_units.each do |sprite|
-        puts "#{sprite.unit.class} state:#{sprite.state} - BusyReason:#{sprite.busy_reason} (#{sprite.object_id} #{sprite.unit.last_action})"
-      end
+
+      #puts "Busy units:"
+      #@busy_units.each do |sprite|
+        #puts "#{sprite.unit.class} state:#{sprite.state} - BusyReason:#{sprite.busy_reason} (#{sprite.object_id} #{sprite.unit.last_action})"
+      #end
     end
   end
 

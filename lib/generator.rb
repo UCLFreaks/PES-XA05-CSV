@@ -12,7 +12,10 @@ confusing. Use constant MAXIMUM_DISTANCE to change it.
 - Minimum distance was lowered from 5 to 1 to compensate for the lower maximum distance.
 Use constant MINIMUM_DISTANCE to change it.
 
-If you want a nicer battle, lower the number of units int unit_weights.
+- Unit count has been halved to better fit into the smaller battlefield.
+You can change the number of battling units by changing the unit_weights.
+
+
 =end
 require 'yaml'
 
@@ -21,11 +24,11 @@ MINIMUM_DISTANCE = 1
 
 def create_units(dir)
   unit_weights = {
-    "Soldier" => 20,
-    "Captain" => 8,
-    "Elite" => 4,
-    "Sniper" => 2,
-    "Tank" => 2
+    "Soldier" => 10,
+    "Captain" => 4,
+    "Elite" => 2,
+    "Sniper" => 1,
+    "Tank" => 1
   }
 
   units = []

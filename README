@@ -21,9 +21,18 @@ install.rb - checks for the necessary libraries and installs them if necesary.
 We tried to keep the original simulation logic unchanged but there are two changes that you should know about:
 - The maximum unit starting distance from the center of the battlefield was lowered from 95 to 20.
 This makes the simulation a lot nicer to look at.
+This setting can be changed in generator.rb
+
+- Unit count has been halved to better fit into the smaller battlefield.
+This setting can be changed in generator.rb
 
 - The tank range was lowered from 20 to 10 to compensate for the smaller battlefield and also to balance things out a little bit.
 
+
+TODO LIST:
+- Visually distinguish between normal soldier, elite and captain.
+- Win message.
+- Decay of the dead bodies
 
 Please send bugs, suggestions and other related stuff to:
 v.kalenda+csv@gmail.com
