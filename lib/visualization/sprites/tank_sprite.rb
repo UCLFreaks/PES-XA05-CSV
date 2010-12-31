@@ -18,6 +18,10 @@ class TankSprite < UnitSprite
     set_animation(:idle)
   end
   
+  def load_sounds
+    @sounds['die2'] = AudioManager.get_sound('tank_die.wav')
+    @sounds['die3'] = @sounds['die2']
+  end
 
   def sprite_size
     return [128,64]

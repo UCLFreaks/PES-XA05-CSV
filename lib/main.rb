@@ -18,11 +18,11 @@ units2 = YAML.load_file('army2_example.yaml');
 
 
 #Creating armies from arrays. Uncomment and use for debugging your strategy.
-#units1 = [Tank.new(5),Tank.new(5)]
+#units1 = [Soldier.new(8),Soldier.new(1),Captain.new(1),Elite.new(1)]
 #units2 = [Soldier.new(-8),Soldier.new(-2),Captain.new(-3),Elite.new(-1)]
 
-army1 = Army.new(units1, SimulationStrategy.new)
-army2 = Army.new(units2, SimulationStrategy.new)
+#army1 = Army.new(units1, SimulationStrategy.new)
+#army2 = Army.new(units2, SimulationStrategy.new)
 battle = BattleProgram.new(army1,army2)
 
 vis = Visualization::Visualization.new(battle)

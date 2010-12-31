@@ -83,7 +83,7 @@ class Weapon
       @status = :active
     else
       shooting_finished
-      puts "Weapon incactive"
+      puts "#{@owner.object_id}: Weapon incactive"
       @status = :inactive
     end
   end

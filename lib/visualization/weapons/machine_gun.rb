@@ -34,6 +34,7 @@ class MachineGun < Weapon
   end
 
   def shoot(target)
+    @hit_delivered = false
     super(target)
   end
 
@@ -43,8 +44,11 @@ class MachineGun < Weapon
   end
 
   def shooting_finished
-    puts "Shooting finished"
-    hit_target if not @hit_delivered
+    puts "#{@owner.object_id}: Shooting finished"
+    if not @hit_delivered
+      hit_target
+      puts "#{@owner.object_id}: Hitting becouse there was not a hit"
+    end
     @hit_delivered = false
   end
 
