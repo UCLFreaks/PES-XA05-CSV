@@ -1,3 +1,19 @@
+=begin
+PES-XA05 Combat simulation
+Original author: Tomas Holas (Unicorn College)
+Modifications by:
+Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010,
+Jakub Kohout
+
+Units definitions.
+
+Modifications:
+- Tank range was lowered from 20 to 10 in order to compensate for the smaller battlefield and also
+to balance thigns a little bit.
+
+- Units classes are extended by unit_extensions.rb. UnitReportMethods module that is defined there provides
+non-intrusive reporting about the unit's last action.
+=end
 module UnitMethods
   attr_accessor :enemy, :name
   attr_reader :range, :damage, :position, :lives

@@ -17,5 +17,4 @@ class BattleProgram
     @day += 1
     #info
   end
-
 end

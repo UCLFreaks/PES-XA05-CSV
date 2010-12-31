@@ -12,10 +12,10 @@ require './visualization/unit_extensions.rb'
 require './visualization/visualization.rb'
 require './visualization/unit_loader.rb'
 require './default_strategy.rb'
-require 'yaml'
 
-#Loading units from YAML file. Change the _example suffix to _user suffix in order
-#to load units from the generator.
+
+#Loading units from YAML file. Modify generator.rb and run it if you want
+#to simulate different battles.
 units1 = UnitLoader.units_from_yaml('army1_user.yaml');
 units2 = UnitLoader.units_from_yaml('army2_user.yaml');
 
@@ -26,6 +26,7 @@ units2 = UnitLoader.units_from_yaml('army2_user.yaml');
 
 army1 = Army.new(units1, DefaultStrategy.new)
 army2 = Army.new(units2, DefaultStrategy.new)
+
 battle = BattleProgram.new(army1,army2)
 
 vis = Visualization::Visualization.new(battle)

@@ -1,3 +1,13 @@
+=begin
+PES-XA05 Combat simulation
+Original author: Tomas Holas (Unicorn College)
+Modifications by: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
+
+Army class and BattleProgram class are defined here.
+
+Modifications:
+- BattleProgram is extended by simulation_extension.rb in order to employ stepping of the simulation.
+=end
 require './simulation/unit_classes.rb'
 
 class Army
@@ -42,6 +52,8 @@ def info
   @army2.status
 end
 
+#Note: this function is never used in the visualization.
+#Sequencing is implemented by the make_step function in the simulation_extension.rb
 def run
   while @day < 100 and @army1.lives > 0 and @army2.lives > 0
     make_step
