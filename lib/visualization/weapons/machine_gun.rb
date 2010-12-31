@@ -54,6 +54,7 @@ class MachineGun < Weapon
 
   def load_sounds
     @sounds['fire'] = AudioManager.get_sound("soldier_fire2.wav")
+    @sounds['fire'].volume = 0.5
   end
 
 end
