@@ -27,53 +27,6 @@ class Army
   end
 end
 
-class SimulationStrategy
-  def step(army1, army2)
-
-		enemies = army2.units.select { |unite| unite.alive? }
-
-			nearest = enemies[0]
-			enemies.each{|enemy|
-				if(enemy.position.abs < nearest.position.abs)
-					nearest = enemy
-				end
-			}
-
-		army1.units.select{|unit| unit.alive? }.each { |unit|
-      unit.enemy = nearest
-      if(unit.class == Sniper)
-        if(unit.focus_time != 0)
-          unit.prepare_weapon
-        else
-          unit.fire
-          #unit.retrat
-        end
-      else
-        
-        if(unit.enemy_distance > unit.range)
-          unit.move
-        else
-         unit.fire
-        end
-      end
-		}
-
-
-		
-
-
-#    s1 = army1.units.first
-#    s2 = army2.units.first
-#    s1.enemy = s2
-#    if s1.enemy_distance >= s1.range
-#      s1.move
-#    else
-#      s1.fire
-#    end
-  end
-end
-
-
 class BattleProgram
 def initialize(army1, army2)
   @army1 = army1
