@@ -16,7 +16,6 @@ class RifleShot < Shot
     @hitting = hitting
     @target = target
     @col_rect = Rubygame::Rect.new(@position[0],@position[1],4,4)
-    #puts "Tank shot spawned"
   end
   def col_rect
     @col_rect.x=(@position[0])
@@ -31,14 +30,11 @@ class RifleShot < Shot
       if(collide_sprite?(@target))
         @status = :inactive
         @weapon.hit_target if @hitting
-        #puts "Colision"
       else
         res = Visualization::Visualization.get_resolution
         if(@position[0]<0 or @position[1]<0)
-          #puts "Removing undershot round"
           @status = :inactive
         elsif(@position[0]> res[0] or @position[1] > res[1])
-          #puts "Removing overshot round"
           @status = :inactive
         end  
       end

@@ -51,11 +51,7 @@ class AnimatedSprite < BasicSprite
 
 
   def add_animation(name,period,repeat = true,frames=number_of_frames)
-    #frames = number_of_frames if frames == nil
-    #puts "frames je: #{frames}"
     @animations[name] = {"name"=>name,"frames"=>frames,"period"=>period,"repeat"=>repeat,"y"=>@animations.count}
-    #puts "adding animation"
-    #p @animations[name]
   end
 
   def should_redraw?
@@ -108,13 +104,11 @@ class AnimatedSprite < BasicSprite
   def update_animation(dt)
     if not final_frame?()
       ca = @current_animation
-      #puts "Animation time is #{}"
       @animation_time += dt
       if(@animation_time >= ca['frame_length'])
         (ca['frame'] < ca['frames'])? ca['frame'] += 1 : ca['frame'] = 1
         @animation_time -= ca['frame_length']
         @should_redraw = true
-        #puts "Current clip is #{current_clip_rect}"
       else
 
       end

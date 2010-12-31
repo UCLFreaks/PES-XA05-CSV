@@ -91,7 +91,6 @@ class UnitSprite < AnimatedSprite
     if(@unit.lives <= 0)
          if(@state != :dead)
            @state = :dead
-           puts "#{@unit.object_id} dies as a sprite"
            set_animation(:dead)
            [@sounds['die3'],@sounds['die2']][rand(2)].play
            make_idle
@@ -199,7 +198,6 @@ private
     if([:move,:retrat,:crawl].include?(last_action) and @state == :living)
       #@state = :moving
       wait_for(rand(1500),:moving)
-      #puts "#{self.class} is moving"
       @destination = @v.sim_to_vis_x(@unit.position)
       distance =   @destination - @position[0]
       current_velocity = max_velocity-min_velocity + rand(max_velocity-min_velocity)
@@ -224,7 +222,6 @@ private
   end
 
   def shoot()
-      #puts "Shooting at #{@unit.fired_at.object_id}"
       target_unit_sprite = @v.get_unit_sprite(@unit.fired_at)
       @weapon.shoot(target_unit_sprite)
   end
@@ -277,14 +274,12 @@ private
   def calculate_actual_weapon_hardpoint
     hc = relative_weapon_hardpoint
     scale_factor = sprite_size[0]/image_original_size[0].to_f
-    #puts "Scale factor is: #{scale_factor}"
     hc = [(hc[0]*scale_factor).round,(hc[1]*scale_factor).round]
     if(@direction == :left)
       result =  [sprite_size[0] - hc[0],sprite_size[1] - hc[1]]
     else
       result = hc
     end
-    #puts "Hardpoint calculation result: #{result}"
     return result
   end
   

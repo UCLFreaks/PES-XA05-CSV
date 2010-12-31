@@ -96,7 +96,6 @@ class BattleVisualizer
     all_units = @battle.army1.units + @battle.army2.units
     unit_positions = all_units.map{|unit| unit.position}
     range = [unit_positions.min, unit_positions.max]
-    puts "range is #{range}"
     return range
   end
 

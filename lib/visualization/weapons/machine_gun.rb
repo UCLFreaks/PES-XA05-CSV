@@ -44,10 +44,8 @@ class MachineGun < Weapon
   end
 
   def shooting_finished
-    puts "#{@owner.object_id}: Shooting finished"
     if not @hit_delivered
       hit_target
-      puts "#{@owner.object_id}: Hitting becouse there was not a hit"
     end
     @hit_delivered = false
   end

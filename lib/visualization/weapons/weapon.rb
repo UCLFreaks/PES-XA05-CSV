@@ -26,7 +26,6 @@ class Weapon
     @owner.make_busy("Shooting at #{@target.unit.object_id}")
     @status = :active
     @actual_number_of_shots = min_number_of_shots + rand(max_number_of_shots-min_number_of_shots+1).floor
-    #puts "Number of shots is #{@actual_number_of_shots}"
     @time_since_last_shot = time_between_shots
   end
 
@@ -34,7 +33,6 @@ class Weapon
     @time_since_last_shot += dt
     if(@shots_fired < @actual_number_of_shots)
       if(@time_since_last_shot >= time_between_shots)
-        #puts "#{self.object_id} Spawning shot"
         shot = spawn_shot
         @current_shots << shot
         @all_shots << shot
@@ -50,7 +48,6 @@ class Weapon
   end
 
   def draw(to_surface)
-    #puts "Drawing shots"
     @all_shots.each do |shot|
       shot.draw(to_surface)
     end
@@ -63,7 +60,6 @@ class Weapon
   def hit_target
     @target.hit
     @owner.make_idle
-    puts "#{@owner.object_id} Hitting target"
   end
 
   private
@@ -73,7 +69,6 @@ class Weapon
       if not (shot.flying?)
         @current_shots.delete(shot)
         @all_shots.delete(shot)
-        #puts "Deleting shot #{shot.object_id}"
       end
     end
   end
@@ -83,7 +78,6 @@ class Weapon
       @status = :active
     else
       shooting_finished
-      puts "#{@owner.object_id}: Weapon incactive"
       @status = :inactive
     end
   end
