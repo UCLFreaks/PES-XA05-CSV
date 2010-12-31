@@ -12,7 +12,8 @@ require './visualization/unit_extensions.rb'
 require './visualization/visualization.rb'
 require 'yaml'
 
-#Loading units from YAML files
+#Loading units from YAML file. Change the _example suffix to _user suffix in order
+#to load units from the generator.
 units1 = YAML.load_file('army1_example.yaml');
 units2 = YAML.load_file('army2_example.yaml');
 
