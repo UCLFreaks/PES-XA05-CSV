@@ -1,6 +1,6 @@
 =begin
 PES-XA05 Combat simulation
-Original author: Tomas Holas
+Original author: Tomas Holas (Unicorn College)
 Modifications by: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
 
 Generator that generates the armies units and stores them into YAML file.
