@@ -13,8 +13,8 @@ require './visualization/visualization.rb'
 require 'yaml'
 
 #Loading units from YAML files
-units1 = YAML.load_file('army1_user.yaml');
-units2 = YAML.load_file('army2_user.yaml');
+units1 = YAML.load_file('army1_example.yaml');
+units2 = YAML.load_file('army2_example.yaml');
 
 
 #Creating armies from arrays. Uncomment and use for debugging your strategy.

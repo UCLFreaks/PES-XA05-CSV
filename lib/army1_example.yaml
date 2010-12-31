@@ -1,0 +1,96 @@
+--- 
+- !ruby/object:Soldier 
+  damage: 2
+  lives: 10
+  name: vojin Vomacka
+  position: 3
+  range: 5
+  speed: 3
+- !ruby/object:Soldier 
+  damage: 2
+  lives: 10
+  name: vojin Vomacka
+  position: 6
+  range: 5
+  speed: 3
+- !ruby/object:Soldier 
+  damage: 2
+  lives: 10
+  name: vojin Vomacka
+  position: 6
+  range: 5
+  speed: 3
+- !ruby/object:Soldier 
+  damage: 2
+  lives: 10
+  name: vojin Vomacka
+  position: 0
+  range: 5
+  speed: 3
+- !ruby/object:Soldier 
+  damage: 2
+  lives: 10
+  name: vojin Vomacka
+  position: 1
+  range: 5
+  speed: 3
+- !ruby/object:Soldier 
+  damage: 2
+  lives: 10
+  name: vojin Vomacka
+  position: 9
+  range: 5
+  speed: 3
+- !ruby/object:Soldier 
+  damage: 2
+  lives: 10
+  name: vojin Vomacka
+  position: 8
+  range: 5
+  speed: 3
+- !ruby/object:Soldier 
+  damage: 2
+  lives: 10
+  name: vojin Vomacka
+  position: 4
+  range: 5
+  speed: 3
+- !ruby/object:Soldier 
+  damage: 2
+  lives: 10
+  name: vojin Vomacka
+  position: 2
+  range: 5
+  speed: 3
+- !ruby/object:Soldier 
+  damage: 2
+  lives: 10
+  name: vojin Vomacka
+  position: 1
+  range: 5
+  speed: 3
+- !ruby/object:Sniper 
+  damage: 20
+  focus_time: 10
+  lives: 12
+  max_focus_time: 10
+  name: vojin Vomacka
+  position: 3
+  range: 15
+  speed: 3
+- !ruby/object:Tank 
+  damage: 30
+  lives: 50
+  name: vojin Vomacka
+  position: 6
+  range: 10
+  shells: 10
+  speed: 6
+- !ruby/object:Tank 
+  damage: 30
+  lives: 50
+  name: vojin Vomacka
+  position: 1
+  range: 10
+  shells: 10
+  speed: 6
