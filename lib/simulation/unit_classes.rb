@@ -51,44 +51,41 @@ end
 
 class Soldier
   include UnitMethods
-  def initialize(position,name)
+  def initialize(position)
     @lives = 10
     @range = 5
     @damage = 2
     @speed = 3
     @position = position
-		@name = name
   end
 end
 
 class Captain
   include UnitMethods
-  def initialize(position,name)
+  def initialize(position)
     @lives = 15
     @range = 6
     @damage = 3
     @speed = 3
     @position = position
-		@name = name
   end
 end
 
 class Elite
   include UnitMethods
-  def initialize(position,name)
+  def initialize(position)
     @lives = 20
     @range = 7
     @damage = 4
     @speed = 4
     @position = position
-		@name = name
   end
 end
 
 class Sniper
   include UnitMethods
   attr_reader :focus_time
-  def initialize(position,name)
+  def initialize(position)
     @lives = 12
     @range = 15
     @damage = 20
@@ -96,7 +93,6 @@ class Sniper
     @max_focus_time = 10
     @focus_time = @max_focus_time
     @position = position
-		@name = name
   end
 
   def crawl
@@ -123,14 +119,13 @@ end
 
 class Tank
   include UnitMethods
-  def initialize(position,name)
+  def initialize(position)
     @lives = 50
     @range = 10
     @damage = 30
     @speed = 6
     @shells = 10
     @position = position
-		@name = name
   end
 
   def fire

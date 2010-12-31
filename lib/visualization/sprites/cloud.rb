@@ -1,3 +1,9 @@
+=begin
+PES-XA05-CSV Combat simulation visualization
+Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
+
+Clouds are here.
+=end
 require "./visualization/sprites/basic_sprite.rb"
 require "./visualization/linear_movement.rb"
 class Cloud < BasicSprite

@@ -1,5 +1,9 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
+=begin
+PES-XA05-CSV Combat simulation visualization
+Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
+
+Cloud simulation.
+=end
 require "./visualization/sprites/cloud.rb"
 class Sky
 

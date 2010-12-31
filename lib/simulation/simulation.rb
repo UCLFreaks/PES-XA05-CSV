@@ -51,11 +51,9 @@ class SimulationStrategy
       else
         
         if(unit.enemy_distance > unit.range)
-          puts unit.name + ' v ' + unit.class.to_s + ' se hejbe '
           unit.move
         else
-          puts unit.name + " (#{unit.object_id}) shoots at  #{unit.enemy.name} (#{unit.enemy.object_id}) " if unit.enemy != nil
-          unit.fire
+         unit.fire
         end
       end
 		}

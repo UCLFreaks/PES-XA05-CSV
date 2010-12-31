@@ -1,5 +1,9 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
+=begin
+PES-XA05-CSV Combat simulation visualization
+Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
+
+This class visualizes the actions of armies.
+=end
 require "./visualization/sprites/axis.rb"
 require "./visualization/sprites/unit_sprite.rb"
 require "./visualization/sprites/soldier_sprite.rb"
@@ -36,6 +40,8 @@ class BattleVisualizer
         sprites << SniperSprite.new(unit, team, self)
       when Tank
         sprites << TankSprite.new(unit, team, self)
+      else
+        sprites << SoldierSprite.new(unit, team, self)
       end
       
     end

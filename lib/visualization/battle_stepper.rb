@@ -1,6 +1,9 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
+=begin
+PES-XA05-CSV Combat simulation visualization
+Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
 
+This class is responsible for stepping the simulation and reporting from the battle.
+=end
 class BattleStepper
 
   def initialize(battle,step_after)

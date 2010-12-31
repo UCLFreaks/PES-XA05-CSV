@@ -1,3 +1,9 @@
+=begin
+PES-XA05-CSV Combat simulation visualization
+Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
+
+Tank shot.
+=end
 class TankShot < Shot
   attr_reader :status
   def initialize(weapon,source_position,target_position)

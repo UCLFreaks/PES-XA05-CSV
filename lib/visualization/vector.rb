@@ -1,6 +1,9 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
+=begin
+PES-XA05-CSV Combat simulation visualization
+Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
 
+Naive vector implementation.
+=end
 class Vector < Array
   def Vector.from_points(start_point,end_point)
     vector = Vector.new

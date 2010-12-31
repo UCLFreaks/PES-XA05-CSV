@@ -3,23 +3,20 @@ require './simulation/unit_classes.rb'
 
 
 def create_units(dir)
-	ranking = ['vojin','desatnik','rotny','rotmistr','porucik','kapitan','major','general']
-	names = ['Vomacka','Vochcalpadlo','Voprckozu','Skocdopole','Teply','Lopata','Hnidopich']
-
 
   unit_weights = {
-    "Soldier" => 2,
+    "Soldier" => 10,
     "Captain" => 0,
     "Elite" => 0,
-    "Sniper" => 0,
-    "Tank" => 0
+    "Sniper" => 1,
+    "Tank" => 2
   }
 
   units = []
   unit_weights.each do |key,val|
     val.times do
       pos = rand(10)*dir
-			units << Object::const_get(key).new(pos,ranking[0] + ' '+ names[0])
+			units << Object::const_get(key).new(pos)
     end
 
   end

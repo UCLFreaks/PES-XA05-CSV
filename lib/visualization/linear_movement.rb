@@ -1,6 +1,9 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
+=begin
+PES-XA05-CSV Combat simulation visualization
+Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
 
+Module for linear movement of sprites.
+=end
 module LinearMovement
   def execute_movement(dt)
     time_shift = dt / 1000.0

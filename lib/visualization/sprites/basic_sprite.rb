@@ -1,3 +1,9 @@
+=begin
+PES-XA05-CSV Combat simulation visualization
+Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
+
+Class that implements basic sprite needs.
+=end
 #Class that implements basic sprite needs.
 class BasicSprite
   include Rubygame::Sprites::Sprite

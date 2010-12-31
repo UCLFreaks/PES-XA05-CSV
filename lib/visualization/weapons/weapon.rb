@@ -1,6 +1,9 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
+=begin
+PES-XA05-CSV Combat simulation visualization
+Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
 
+Generic weapon implementation.
+=end
 class Weapon
   attr_reader :target
   def initialize(owner)

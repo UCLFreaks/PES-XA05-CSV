@@ -1,3 +1,9 @@
+=begin
+PES-XA05-CSV Combat simulation visualization
+Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
+
+Generic shot.
+=end
 class Shot < BasicSprite
   attr_reader :status,:hitting
   def initialize(weapon,source_position,target_position)

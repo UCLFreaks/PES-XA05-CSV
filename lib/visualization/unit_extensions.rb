@@ -1,3 +1,9 @@
+=begin
+PES-XA05-CSV Combat simulation visualization
+Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
+
+Necessary non intrusive extensions to the original unit methods and unit classes.
+=end
 module UnitReportMethods
   attr_reader :last_action,:fired_at
 
@@ -31,7 +37,7 @@ class Soldier
   include UnitReportMethods
 end
 
-class Captian
+class Captain
   include UnitReportMethods
 end
 

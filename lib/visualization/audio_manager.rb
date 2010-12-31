@@ -1,3 +1,9 @@
+=begin
+PES-XA05-CSV Combat simulation visualization
+Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
+
+Audio manager for loading and caching sounds.
+=end
 class AudioManager
   @@sounds = {}
   SOUND_PATH = "./visualization/sounds/"

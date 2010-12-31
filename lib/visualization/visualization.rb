@@ -1,8 +1,17 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-#require "./visualization/rubygame/lib/rubygame.rb"
+=begin
+PES-XA05-CSV Combat simulation visualization
+Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
+
+Main class responsible for starting and maintaining the visualization.
+=end
 require "rubygems"
-require "rubygame"
+begin
+  require "rubygame"
+rescue Exception=>ex
+  puts "Failed to load Rubygame gem. Run install.rb to install it."
+  puts "(#{ex.message})"
+  exit
+end
 module Visualization
 require "./visualization/vector.rb"
 require "./visualization/background.rb"

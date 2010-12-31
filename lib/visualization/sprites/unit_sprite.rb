@@ -1,6 +1,9 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
+=begin
+PES-XA05-CSV Combat simulation visualization
+Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
 
+Superclass of all unit sprites. Most of the visualization logic is defined here.
+=end
 require "./visualization/linear_movement.rb"
 require "./visualization/sprites/shot.rb"
 require "./visualization/sprites/tank_shot.rb"
@@ -90,7 +93,7 @@ class UnitSprite < AnimatedSprite
            @state = :dead
            puts "#{@unit.object_id} dies as a sprite"
            set_animation(:dead)
-           [@sounds['die3'],@sounds['die2']].sample.play
+           [@sounds['die3'],@sounds['die2']][rand(2)].play
            make_idle
          end
     end

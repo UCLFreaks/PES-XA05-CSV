@@ -1,6 +1,9 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
+=begin
+PES-XA05-CSV Combat simulation visualization
+Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
 
+Machine gun weapon implementation.
+=end
 class MachineGun < Weapon
   attr_reader :hit_delivered
   def initialize(owner)
