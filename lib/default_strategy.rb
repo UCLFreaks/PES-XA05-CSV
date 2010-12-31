@@ -1,3 +1,11 @@
+=begin
+PES-XA05-CSV Combat simulation visualization
+Author: Jakub Kohout (C) 2010
+
+Default showcase strategy by Jakub Kohout.
+This strategy is not finished and just showcases the visualization.
+Do not use it in your homework!
+=end
 class DefaultStrategy
   def step(army1, army2)
 		enemies = army2.units.select { |unite| unite.alive? }

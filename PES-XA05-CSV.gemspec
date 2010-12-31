@@ -1,6 +1,6 @@
 spec = Gem::Specification.new do |s|
   s.name = 'PES-XA05-CSV'
-  s.version = '0.0.1'
+  s.version = '0.9.0'
   s.has_rdoc = true
   s.extra_rdoc_files = ['README', 'LICENSE']
   s.summary = 'PES-XA05-CSV'
