@@ -29,7 +29,7 @@ Sniper rules:
 
 class GenericTactic
   def make_move(unit,strategy)
-
+    raise "Abstract method make_move is not implemented for Class #{self.class}"
   end
   private
   def target_priority_by_type(enemy_unit)
@@ -39,10 +39,59 @@ class GenericTactic
 
 end
 
+class TankTactic < GenericTactic
+  def make_move(tank,strategy)
+    tank.enemy = strategy.first_enemy(tank)
+    if(tank.shells > 0)
+      targets = strategy.targets_in_range(tank)
+      if(targets.empty?)
+        tank.move
+      else
+        targets.sort_by { |target| target_priority_by_type(target['unit'])}
+        tank.enemy = targets.last['unit']
+        #Dont waste shells on not important targets
+        ec = strategy.enemy_units_by_type
+        interesting_count = ec[Tank].count + ec[Elite].count + ec[Sniper].count
+        if(interesting_count > 0 and target_priority_by_type(tank.enemy) < 0)
+          tank.enemy = get_priority_movement_target(ec)
+          tank.move
+        else
+          tank.fire
+        end
+      end
+    else
+      #Act as a meat shield
+      tank.move
+    end
+  end
+  private
+  def target_priority_by_type(enemy_unit)
+    case enemy_unit
+    when Tank
+      return 5
+    when Elite
+      return 4
+    when Sniper
+      return 3
+    when Captain
+      return -1
+    when Soldier
+      return -2
+    end
+  end
+
+  def get_priority_movement_target(ec)
+    return ec[Tank].first if not ec[Tank].empty?
+    return ec[Elite].first if not ec[Elite].empty?
+    return ec[Sniper].first if not ec[Sniper].empty?
+  end
+
+end
+
 class SniperTactic < GenericTactic
   DANGER_ZONE = 5
   def make_move(sniper,strategy)
-    first_enemy = strategy.first_enemey(sniper)
+    first_enemy = strategy.first_enemy(sniper)
     sniper.enemy = first_enemy
     if not prepared?(sniper)
       if sniper.position.abs < DANGER_ZONE
@@ -54,19 +103,15 @@ class SniperTactic < GenericTactic
       targets = strategy.targets_in_range(sniper)
       if(targets.empty?)
         sniper.crawl
-        puts "crawling"
       else
-        puts "Not crawling"
         threats = strategy.threats_for_unit(sniper)
         if not(threats.empty?)
           threats.sort_by { |threat| target_priority_by_type(threat['unit'])}
           sniper.enemy = threats.last['unit']
-          puts "Shooting at threat #{sniper.enemy}"
           sniper.fire
         else
           targets.sort_by { |target| target_priority_by_type(target['unit'])}
           sniper.enemy = targets.last['unit']
-          puts "Shooting at target #{sniper.enemy}"
           sniper.fire
         end
       end
@@ -93,8 +138,6 @@ class SniperTactic < GenericTactic
       return 2
     when Soldier
       return 1
-
-
     end
   end
 
@@ -104,7 +147,7 @@ class SoldierTactic < GenericTactic
   def make_move(unit,strategy)
     targets = strategy.targets_in_range(unit)
     if(targets.empty?)
-      unit.enemy = strategy.first_enemey(unit)
+      unit.enemy = strategy.first_enemy(unit)
       unit.move
     else
       targets = targets.sort_by{|target| target_priority_by_type(target['unit'])}
@@ -134,7 +177,7 @@ end
 class VKJStrategy
      SOLDIER_TACTIC = SoldierTactic.new
      SNIPER_TACTIC = SniperTactic.new
-     TANK_TACTIC = GenericTactic.new
+     TANK_TACTIC = TankTactic.new
 
     def step(friendly_army, enemy_army)
       @friendly = filter_out_dead_units(friendly_army.units)
@@ -169,6 +212,8 @@ class VKJStrategy
       return targets_in_range
     end
 
+
+
     def threats_for_unit(unit)
       threats = []
       go_through_each_unit(@enemy) do |enemy_unit|
@@ -180,7 +225,21 @@ class VKJStrategy
       return threats
     end
 
-    def first_enemey(unit)
+    def enemy_units_by_type
+      enemy = {
+        Soldier => [],
+        Captain => [],
+        Elite => [],
+        Sniper => [],
+        Tank => []
+      }
+      go_through_each_unit(@enemy) do |enemy_unit|
+        enemy[enemy_unit.class] << enemy_unit
+      end
+      return enemy
+    end
+
+    def first_enemy(unit)
       @enemy.each do |unit|
         return unit if unit.alive?
       end
