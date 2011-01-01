@@ -5,6 +5,14 @@ Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
 Main class responsible for starting and maintaining the visualization.
 =end
 require "rubygems"
+if(RUBY_PLATFORM == "i386-mingw32" and RUBY_VERSION =~ /^1\.8\../ )
+  begin
+    puts "Loading ffi gem 0.6.3. for compatibility."
+    gem 'ffi', '= 0.6.3'
+  rescue Exception=>ex
+    puts "Failed to load ffi gem 0.6.3. gem. Try running install.rb to install it."
+  end
+end
 begin
   require "rubygame"
 rescue Exception=>ex

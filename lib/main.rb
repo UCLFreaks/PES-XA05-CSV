@@ -1,8 +1,8 @@
 =begin
 PES-XA05-CSV Combat simulation visualization
-Version: 0.9.0
+Version: 0.9.1
 Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
-Written in Ruby 1.9.2-p0 (Seems to work in JRuby 1.5)
+Written in Ruby 1.9.2-p0 (Seems to work in Ruby 1.8 and JRuby 1.5)
 
 This file contains entry point for the simulation. Run this file.
 =end
