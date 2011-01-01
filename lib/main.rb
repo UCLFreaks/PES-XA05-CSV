@@ -12,7 +12,7 @@ require './visualization/unit_extensions.rb'
 require './visualization/visualization.rb'
 require './visualization/unit_loader.rb'
 require './default_strategy.rb'
-
+require './vk_strategy/general_vk_strategy.rb'
 
 #Loading units from YAML file. Modify generator.rb and run it if you want
 #to simulate different battles.
@@ -24,7 +24,7 @@ units2 = UnitLoader.units_from_yaml('army2_user.yaml');
 #units1 = [Soldier.new(8),Soldier.new(1),Captain.new(1),Elite.new(1)]
 #units2 = [Soldier.new(-8),Soldier.new(-2),Captain.new(-3),Elite.new(-1)]
 
-army1 = Army.new(units1, DefaultStrategy.new)
+army1 = Army.new(units1, GeneralVK::Strategy.new)
 army2 = Army.new(units2, DefaultStrategy.new)
 
 battle = BattleProgram.new(army1,army2)
