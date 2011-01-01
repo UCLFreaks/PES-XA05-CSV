@@ -61,6 +61,7 @@ class Sniper
 end
 
 class Tank
+  attr_reader :shells
   include UnitReportMethods
 end
 
