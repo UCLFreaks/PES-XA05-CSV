@@ -5,6 +5,21 @@ Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
 Sniper sprite.
 =end
 class SniperSprite < UnitSprite
+  def react_to_last_action(last_action)
+    if(last_action == :prepare_weapon)
+      set_animation(:idle,prepare_weapon_frame)
+    end
+    super(last_action)
+  end
+  private
+  def prepare_weapon_frame
+    step = 8.0/@unit.max_focus_time
+    current_step = @unit.max_focus_time-@unit.focus_time
+    frame = (step*current_step).floor
+    frame = 2 if frame < 2
+    return frame
+  end
+
   def get_image_base_name()
     return "sniper"
   end
@@ -24,12 +39,4 @@ class SniperSprite < UnitSprite
   def relative_weapon_hardpoint
     return [62,37]
   end
-
-  def react_to_last_action(last_action)
-    if(last_action == :prepare_weapon)
-      set_animation(:idle,@unit.max_focus_time+1-[@unit.focus_time,3].max)
-    end
-    super(last_action)
-  end
-
 end
