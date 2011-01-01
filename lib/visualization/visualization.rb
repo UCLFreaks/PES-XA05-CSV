@@ -60,10 +60,13 @@ class Visualization
     
     @background = Background.new(@@resolution,@sky_height)
     @status  = Status.new
-
-    music = AudioManager.get_music("ambience.mp3")
-    music.volume = 0.34
-    music.play
+    begin
+      music = AudioManager.get_music("ambience.mp3")
+      music.volume = 0.34
+      music.play
+    rescue Exception=>ex
+      puts "Failed to load music #{ex.message}"
+    end
 
 	end
  

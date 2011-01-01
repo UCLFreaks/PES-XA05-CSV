@@ -14,7 +14,7 @@ puts " ---------------------------------------------------------"
 puts "Ruby platform: " + RUBY_PLATFORM
 puts "Ruby platform version: " + RUBY_VERSION
 if(RUBY_PLATFORM == "i386-mingw32" and RUBY_VERSION =~ /^1\.8\../ )
-  puts "ffi library version 0.6.3 is needed for compatability reasons."
+  puts "ffi library version 0.6.3 is needed for compatibility reasons."
   if(Gem.available?('ffi', "= 0.6.3"))
     puts "ffi version 0.6.3. is already installed. proceeding..."
   else
