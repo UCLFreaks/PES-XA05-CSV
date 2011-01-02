@@ -74,7 +74,7 @@ class UnitSprite < AnimatedSprite
     if(@state == :dead)
       return [lcp[0]+10,lcp[1]+40,ss[0]-10,ss[1]-40]
     end
-    return [lcp[0]+10,lcp[1],ss[0]-10,ss[1]]
+    return [lcp[0]+20,lcp[1],ss[0]-35,ss[1]]
   end
 
   def setup_animation
@@ -163,6 +163,9 @@ class UnitSprite < AnimatedSprite
     @image = get_current_frame_image
     @image.blit(to_surface,[(@position[0]-sprite_size[0]/2).round,
         (@position[1]-sprite_size[1]/2).round])
+    if(Visualization.debug?)
+      draw_col_rect(to_surface)
+    end
     #Drawing bounding box for debuging
 #    lcp = left_corner_position
 #    to_surface.draw_box(
@@ -215,6 +218,11 @@ private
 
   def should_move?
     return true if @destination != nil
+  end
+
+  def draw_col_rect(to_surface)
+    cr = col_rect
+    to_surface.draw_box([cr[0],cr[1]], [cr[0]+cr[2],cr[1]+cr[3]], [255,255,0])
   end
 
   def depth_to_y

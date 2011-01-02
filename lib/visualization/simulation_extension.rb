@@ -15,6 +15,6 @@ class BattleProgram
     @army1.attack(@army2)
     @army2.attack(@army1)
     @day += 1
-    info
+    info if not Visualization.debug?
   end
 end
