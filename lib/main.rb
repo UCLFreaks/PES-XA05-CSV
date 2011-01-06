@@ -29,5 +29,5 @@ army2 = Army.new(units2, DefaultStrategy.new)
 
 battle = BattleProgram.new(army1,army2)
 
-vis = Visualization::Visualization.new(battle)
+vis = Visualization.new(battle)
 vis.run

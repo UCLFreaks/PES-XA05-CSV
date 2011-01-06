@@ -31,7 +31,7 @@ class RifleShot < Shot
         @status = :inactive
         @weapon.hit_target if @hitting
       else
-        res = Visualization::Visualization.get_resolution
+        res = Visualization.get_resolution
         if(@position[0]<0 or @position[1]<0)
           @status = :inactive
         elsif(@position[0]> res[0] or @position[1] > res[1])

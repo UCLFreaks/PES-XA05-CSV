@@ -20,7 +20,6 @@ rescue Exception=>ex
   puts "(#{ex.message})"
   exit
 end
-module Visualization
 require "./visualization/vector.rb"
 require "./visualization/background.rb"
 require "./visualization/sky.rb"
@@ -34,9 +33,13 @@ require "./visualization/battle_stepper.rb"
 require "./visualization/battle_visualizer.rb"
 
 class Visualization
+  DEBUG_MODE = false
   attr_reader :sky_height
 	def Visualization.get_resolution
     return @@resolution
+  end
+  def Visualization.debug?
+    return DEBUG_MODE
   end
   def initialize(battle)
     @battle_stepper = BattleStepper.new(battle,100)
@@ -107,5 +110,4 @@ class Visualization
     @screen.flip
     
 	end
-end
 end
