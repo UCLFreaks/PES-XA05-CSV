@@ -1,6 +1,6 @@
 == PES-XA05-CSV
 Combat simulation visualization
-Version: 0.9.2
+Version: 0.9.3
 
 Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
 Showcase strategy by: Jakub Kohout
@@ -20,7 +20,7 @@ On linux:
 This visualization should make writing the PES-XA05 homework a little bit more fun.
 
 Only thing you need to do is implement your own strategy, and pass it to the armies in the main.rb.
-ALWAYS TEST YOUR STRATEGIES AGAINST THE ORIGINAL PES-XA05! THERE MAY BE BUGS IN THE VISUALIZATION.
+ALWAYS TEST YOUR STRATEGIES AGAINST THE simulation_only.rb! THERE MAY BE BUGS IN THE VISUALIZATION.
 
 These files should be interesting to you:
 main.rb - you run this to begin the simulation
