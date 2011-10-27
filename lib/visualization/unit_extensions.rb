@@ -13,7 +13,7 @@ module UnitReportMethods
   end
 
   def retrat
-    @last_action = :retrat
+    @last_action = :retreat
     super()
   end
 

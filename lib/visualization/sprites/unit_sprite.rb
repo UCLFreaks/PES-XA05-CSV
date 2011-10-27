@@ -198,7 +198,7 @@ private
       end
     end
 
-    if([:move,:retrat,:crawl].include?(last_action) and @state == :living)
+    if([:move,:retreat,:crawl].include?(last_action) and @state == :living)
       #@state = :moving
       wait_for(rand(1500),:moving)
       @destination = @v.sim_to_vis_x(@unit.position)

@@ -30,7 +30,7 @@ module UnitMethods
     @position += @speed*attack_direction
   end
 
-  def retrat
+  def retreat
     @position -= @speed*attack_direction
   end
 

@@ -13,7 +13,7 @@ class SniperTactic < GenericTactic
     sniper.enemy = first_enemy
     if not prepared?(sniper)
       if sniper.position.abs < DANGER_ZONE
-        sniper.retrat
+        sniper.retreat
       else
         sniper.prepare_weapon
       end
