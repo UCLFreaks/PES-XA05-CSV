@@ -18,6 +18,7 @@ class AnimatedSprite < BasicSprite
     @should_redraw = true
     @final_frame = nil
     @image = get_current_frame_image
+    @is_static_frame = false
     
   end
 
@@ -64,8 +65,10 @@ class AnimatedSprite < BasicSprite
     @current_animation['frame'] = current_frame
     if(current_frame > 1)
       @final_frame = current_frame
+      @is_static_frame = true
     else
       @final_frame = @current_animation['frames']
+      @is_static_frame = false
     end  
     @should_redraw = true
   end
@@ -95,7 +98,7 @@ class AnimatedSprite < BasicSprite
   end
 
   def final_frame?
-    if(@current_animation['repeat'] == false)
+    if(@current_animation['repeat'] == false or @is_static_frame == true)
       return true if(@current_animation['frame'] == @final_frame)
     end
     return false
