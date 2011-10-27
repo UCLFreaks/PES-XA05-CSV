@@ -13,7 +13,7 @@ class Sky
   def initialize(sky_width,sky_height)
     @height = sky_height
     @sky_sprites = SpriteGroup.new
-    @sky_sprites << Bird.new
+    @sky_sprites << Bird.new(sky_width,sky_height);
     rand(20).times do
       @sky_sprites << Cloud.new(sky_width,sky_height)
     end

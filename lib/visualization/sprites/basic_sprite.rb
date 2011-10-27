@@ -41,12 +41,25 @@ class BasicSprite
     @position = pos
   end
   
+  def position_x
+    return @position[0]
+  end
+  
   def position_x=(x)
     @position = [x,@position[1]]
   end
+  
+  def position_y
+    return @position[1]
+  end
+  
   def position_y=(y)
     @position = [@position[0],y]
   end
+  
+  
+  
+ 
 
   def move(dt)
     execute_movement(dt) if should_move?
