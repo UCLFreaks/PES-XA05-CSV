@@ -59,7 +59,7 @@ end
     @army1.attack(@army2)
     @army2.attack(@army1)
     @day += 1
-    info if not Visualization.debug?
+    info
   end
 
 #Note: this function is never used in the visualization.
