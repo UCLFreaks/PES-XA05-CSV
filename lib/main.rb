@@ -7,7 +7,6 @@ Written in Ruby 1.9.2-p0 (Seems to work in Ruby 1.8 and JRuby 1.5)
 This file contains entry point for the simulation. Run this file.
 =end
 require './simulation/simulation.rb'
-require './visualization/unit_extensions.rb'
 require './visualization/visualization.rb'
 require './visualization/unit_loader.rb'
 require './default_strategy.rb'
