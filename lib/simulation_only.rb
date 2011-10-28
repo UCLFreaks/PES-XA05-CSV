@@ -7,8 +7,6 @@ Written in Ruby 1.9.2-p0 (Seems to work in Ruby 1.8 and JRuby 1.5)
 If Visualization does not work. Run this file. It runs the simulation in text mode.
 =end
 require './simulation/simulation.rb'
-require './visualization/simulation_extension.rb'
-require './visualization/unit_extensions.rb'
 require './visualization/unit_loader.rb'
 require './default_strategy.rb'
 require './vk_strategy/general_vk_strategy.rb'

@@ -17,6 +17,7 @@ non-intrusive reporting about the unit's last action.
 module UnitMethods
   attr_accessor :enemy, :name
   attr_reader :range, :damage, :position, :lives
+  attr_reader :last_action,:fired_at
   
   def enemy_distance
     if enemy
@@ -27,10 +28,12 @@ module UnitMethods
   end
 
   def move
+    @last_action = :move
     @position += @speed*attack_direction
   end
 
   def retreat
+    @last_action = :retreat
     @position -= @speed*attack_direction
   end
 
@@ -46,6 +49,12 @@ module UnitMethods
 	def alive?
 		return (@lives > 0)
 	end
+  
+  #Do not use! This function is for visualization purpose
+  def clear_last_action
+    @last_action = nil
+    @fired_at = nil
+  end
 
 
   private 
@@ -53,8 +62,13 @@ module UnitMethods
   def fire_in_range
     if enemy and enemy_distance < @range and lives > 0
       @enemy.recieve_damage(@damage)
+      @last_action = :fire_hit
+    else
+      @last_action = :fire_miss
     end
-  end
+    @fired_at = enemy
+  end  
+
   
   def attack_direction
     if position > @enemy.position
@@ -100,7 +114,7 @@ end
 
 class Sniper
   include UnitMethods
-  attr_reader :focus_time
+  attr_reader :focus_time, :max_focus_time
   def initialize(position)
     @lives = 12
     @range = 15
@@ -112,15 +126,18 @@ class Sniper
   end
 
   def crawl
+    @last_action = :crawl
     @position += attack_direction
   end
 
   def move
+    @last_action = :move
     @position += @speed*attack_direction
     @focus_time = @max_focus_time
   end
 
   def prepare_weapon
+    @last_action = :prepare_weapon
     @focus_time -= 1
   end
 
@@ -134,6 +151,7 @@ class Sniper
 end
 
 class Tank
+  attr_reader :shells
   include UnitMethods
   def initialize(position)
     @lives = 50
