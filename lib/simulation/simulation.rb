@@ -38,6 +38,8 @@ class Army
 end
 
 class BattleProgram
+  attr_reader :army1, :army2   
+
 def initialize(army1, army2)
   @army1 = army1
   @army2 = army2
@@ -51,6 +53,14 @@ def info
   puts "Army 2:"
   @army2.status
 end
+
+
+  def make_step
+    @army1.attack(@army2)
+    @army2.attack(@army1)
+    @day += 1
+    info if not Visualization.debug?
+  end
 
 #Note: this function is never used in the visualization.
 #Sequencing is implemented by the make_step function in the simulation_extension.rb
