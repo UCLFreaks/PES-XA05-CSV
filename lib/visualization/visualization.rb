@@ -99,14 +99,14 @@ class Visualization
     end
     @sky.update(td)
     @battle_visualizer.update(td)
-    @status.update(td)
+    #@status.update(td)
 	end
 
 	def draw
     @background.draw(@screen)
     @sky.draw(@screen)
     @battle_visualizer.draw(@screen)
-    @status.draw(@screen)
+    #@status.draw(@screen)
     @screen.flip
     
 	end
