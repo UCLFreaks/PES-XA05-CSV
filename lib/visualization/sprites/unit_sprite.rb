@@ -210,9 +210,9 @@ private
   end
 
   def get_current_frame_image
-    should_rdrw = should_redraw?
+    should_rdraw = should_redraw?
     super
-    @image = @image.flip(true, false) if should_rdrw and @direction == :left
+    @image = @image.flip(true, false) if should_rdraw and @direction == :left
     return @image
   end
 
