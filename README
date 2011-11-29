@@ -1,9 +1,10 @@
 == PES-XA05-CSV
 Combat simulation visualization
-Version: 0.9.3
+Version: 0.9.5
 
 Author: Vratislav Kalenda <v.kalenda+csv@gmail.com> (C) 2010
-Showcase strategy by: Jakub Kohout
+Showcase strategy of Blue Army by: Jakub Kohout
+Showcase strategy of Red Army by: Vratislav Kalenda
 Original PES-XA05 source files by: Tomas Holas (Unicorn College)
 
 Written in Ruby 1.9.2-p0 (Seems to work in Ruby 1.8 and JRuby 1.5)
